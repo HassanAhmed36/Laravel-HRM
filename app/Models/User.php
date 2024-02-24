@@ -46,12 +46,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class, 'designation_id');
+    }
     public function employeeBasicInfo()
     {
         return $this->hasOne(EmployeeBasicInfo::class, 'user_id');
     }
-
+    public function employementInfo()
+    {
+        return $this->hasOne(EmploymentDetails::class, 'user_id');
+    }
+    public function bankDetails()
+    {
+        return $this->hasOne(EmployeeBankDetail::class, 'user_id');
+    }
+    public function employeeLeave()
+    {
+        return $this->hasOne(EmployeeLeave::class, 'user_id');
+    }
     public function documents()
     {
         return $this->hasMany(Document::class, 'user_id');

@@ -18,24 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $department = Department::create([
-            'name' => 'Adminstration'
-        ]);
-        $designation = Designation::create([
-            'name' => 'Admin',
-            'department_id' => $department->id
-        ]);
-
-        $user = User::create([
-            'name' => 'Admin',
-            'Emp_Id' => 'EMP-1',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123'),
-            'is_active' => true,
-            'designation_id' => $designation->id,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
+        $this->call(DepartmentAndDesignationSeeder::class);
+        $this->call(AdminSeeder::class);
+        $this->call(EmployeeSeeder::class);
     }
 }

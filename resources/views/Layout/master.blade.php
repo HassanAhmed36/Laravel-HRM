@@ -19,10 +19,13 @@
     <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"
         type="text/css">
     <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        .toast-success {
+            background-color: rgb(10, 192, 116) !important;
+        }
+    </style>
 </head>
-
 <body data-sidebar="dark">
     <div id="layout-wrapper">
         @include('partials.app_header')
@@ -30,22 +33,6 @@
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
-
-                    @session('success')
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ $value }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                                fdprocessedid="bavcca"></button>
-                        </div>
-                    @endsession
-                    @session('error')
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ $value }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                                fdprocessedid="bavcca"></button>
-                        </div>
-                    @endsession
-
                     @yield('main_section')
                 </div>
             </div>
@@ -57,6 +44,8 @@
         </div>
         <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
         <div class="rightbar-overlay"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
         <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
@@ -67,9 +56,14 @@
         <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-
         <script>
             $('#datatable').DataTable();
+            @session('success')
+            toastr.success("{{ session('success') }}");
+            @endsession
+            @session('error')
+            toastr.error("{{ session('error') }}");
+            @endsession
         </script>
 </body>
 

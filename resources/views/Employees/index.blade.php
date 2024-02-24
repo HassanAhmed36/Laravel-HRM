@@ -25,14 +25,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
+                            @foreach ($Users as $User)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $User->Emp_Id }}</td>
+                                    <td>{{ $User->name }}</td>
+                                    <td>{{ $User->designation->name }}</td>
+                                    <td>
+                                        <span
+                                            class="badge badge-pill badge-soft-{{ $User->is_active ? 'success' : 'danger' }}">
+                                            {{ $User->is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('employee.edit', ['id' => $User->id]) }}"
+                                            class="btn btn-outline-info btn-sm edit" title="Edit">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <a href="{{ route('employee.delete', ['id' => $User->id]) }}"
+                                            class="btn btn-outline-danger btn-sm edit" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -5,23 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Department;
 use App\Models\Designation;
-use App\Models\EmployeeBankDetail;
-use App\Models\EmployeeBasicInfo;
-use App\Models\EmployeeLeave;
-use App\Models\EmploymentDetails;
 use App\Models\User;
+use App\Services\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $employeeService;
+    public function __construct(EmployeeService $EmployeeService)
+    {
+        $this->employeeService = $EmployeeService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('Employees.index');
+        $Users = User::with('designation')->whereNot('designation_id', 1)->get();
+        return view('Employees.index', compact('Users'));
     }
 
     /**
@@ -39,74 +42,15 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        // dd($request->toArray());
-
-        DB::beginTransaction();
-
         try {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'Emp_Id' => $this->getEmployeeID(),
-                'is_active' => $request->filled('is_active'),
-                'designation_id' => $request->designation_id,
-            ]);
-
-            if ($user) {
-                $path = null;
-
-                if ($request->hasFile('profile_image')) {
-                    $path = $request->file('profile_image')->store('profile_images');
-                }
-
-                $employeeInfo = EmployeeBasicInfo::create([
-                    'date_of_birth' => $request->date_of_birth,
-                    'cnic' => $request->cnic,
-                    'phone_number' => $request->phone_number,
-                    'address' => $request->address,
-                    'personal_email' => $request->personal_email,
-                    'profile_image' => $path,
-                    'user_id' => $user->id,
-                ]);
-
-                $employeeDetail = EmploymentDetails::create([
-                    'salary' => $request->salary,
-                    'job_type' => $request->job_type,
-                    'shift_start_time' => $request->shift_start_timing,
-                    'shift_end_time' => $request->shift_end_timing,
-                    'joining_date' => $request->joining_date,
-                    'user_id' => $user->id,
-                ]);
-
-                $bankDetail = EmployeeBankDetail::create([
-                    'account_holder_name' => $request->account_holder_name,
-                    'account_number' => $request->account_number,
-                    'IBAN' => $request->IBAN,
-                    'user_id' => $user->id,
-                ]);
-
-                $employeeLeave = EmployeeLeave::create([
-                    'sick_leave' => $request->sick_leave,
-                    'casual_leave' => $request->casual_leave,
-                    'annual_leave' => $request->annual_leave,
-                    'user_id' => $user->id,
-                ]);
-
-                if ($request->hasFile('documents')) {
-                    foreach ($request->file('documents') as $document) {
-                        $document->store('documents');
-                    }
-                }
-                DB::commit();
+            $result = $this->employeeService->createUser($request);
+            if ($result) {
                 return redirect()->route('employee.index')->with('success', 'Employee added successfully');
             } else {
-                DB::rollBack();
                 return back()->with('error', 'User registration failed!');
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            DB::rollBack();
+            // dd($e->getMessage());
             return back()->with('error', 'An error occurred while processing the request.');
         }
     }
@@ -122,9 +66,17 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::with([
+            'employeeLeave',
+            'designation',
+            'employeeBasicInfo',
+            'employementInfo',
+            'bankDetails'
+        ])->find($id);
+        $designations = Designation::all();
+        return view('Employees.edit', compact('user', 'designations'));
     }
 
     /**
@@ -140,20 +92,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
-
-    private function getEmployeeID()
-    {
-        $latestEmployee = User::latest()->first();
-        if ($latestEmployee) {
-            $currentNumber = (int) explode('-', $latestEmployee->Emp_Id)[1];
-            $newNumber = $currentNumber + 1;
-            $newEmployeeID = 'EMP-' . $newNumber;
-            return $newEmployeeID;
-        } else {
-            return 'EMP-1';
+        try {
+            User::where('id', $id)->delete();
+            return back()->with('success', 'Employee deleted successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete employee: ' . $e->getMessage());
         }
     }
-
 }
