@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Document;
 use App\Models\EmployeeBankDetail;
 use App\Models\EmployeeBasicInfo;
 use App\Models\EmployeeLeave;
@@ -55,7 +56,6 @@ class EmployeeService
                     'IBAN' => $request->IBAN,
                     'user_id' => $user->id,
                 ]);
-
                 $employeeLeave = EmployeeLeave::create([
                     'sick_leave' => $request->sick_leave,
                     'casual_leave' => $request->casual_leave,
@@ -65,7 +65,13 @@ class EmployeeService
 
                 if ($request->hasFile('documents')) {
                     foreach ($request->file('documents') as $document) {
-                        $document->store('documents');
+                        $filePath = $document->store('documents');
+                        $document =  Document::create([
+                            'user_id' => $user->id,
+                            'file_path' => $filePath,
+                            'name' => $document->getClientOriginalName()
+                        ]);
+                        dd($document);
                     }
                 }
                 DB::commit();
@@ -80,11 +86,20 @@ class EmployeeService
             return back()->with('error', 'An error occurred while processing the request.');
         }
     }
-    private function getEmployeeID()
+    public function getEmployeeID()
     {
-        $latestEmployee = User::withTrash()->latest()->first();
+        $latestEmployee = User::withTrashed()->latest()->first();
         $currentNumber = $latestEmployee ? $latestEmployee->id + 1 : 1;
         return 'EMP-' . $currentNumber;
-        
+    }
+    public function delete_document($id)
+    {
+        try {
+            $document = Document::find($id);
+            $document->delete();
+            return back()->with('success', 'Document deleted successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Document deletion failed!');
+        }
     }
 }

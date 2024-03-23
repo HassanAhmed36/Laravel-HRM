@@ -8,6 +8,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\UserController;
 use App\Models\Designation;
+use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,6 +33,7 @@ Route::middleware('check.auth')->group(function () {
     Route::get('/edit-employee/{id}', [UserController::class, 'edit'])->name('employee.edit');
     Route::post('/Update-employee/{id}', [UserController::class, 'update'])->name('employee.update');
     Route::get('/Delete-employee/{id}', [UserController::class, 'destroy'])->name('employee.delete');
+    Route::get('/delete-document/{id}', [EmployeeService::class, 'delete_document'])->name('delete.document');
 
     Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');
     Route::post('/department-store', [DepartmentController::class, 'store'])->name('department.store');

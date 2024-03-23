@@ -18,28 +18,20 @@ class UserController extends Controller
     {
         $this->employeeService = $EmployeeService;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $Users = User::with('designation')->whereNot('designation_id', 1)->get();
         return view('Employees.index', compact('Users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $Emp_ID = $this->getEmployeeID();
+        $Emp_ID = $this->employeeService->getEmployeeID();
         $designations = Designation::all();
         return view('Employees.create', compact('Emp_ID', 'designations'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(UserRequest $request)
     {
         try {
@@ -50,22 +42,16 @@ class UserController extends Controller
                 return back()->with('error', 'User registration failed!');
             }
         } catch (\Exception $e) {
-            // dd($e->getMessage());
             return back()->with('error', 'An error occurred while processing the request.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
         $user = User::with([
@@ -73,7 +59,8 @@ class UserController extends Controller
             'designation',
             'employeeBasicInfo',
             'employementInfo',
-            'bankDetails'
+            'bankDetails',
+            'documents'
         ])->find($id);
         $designations = Designation::all();
         return view('Employees.edit', compact('user', 'designations'));

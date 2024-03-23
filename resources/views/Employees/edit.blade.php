@@ -1,5 +1,6 @@
 @extends('Layout.master')
 @section('main_section')
+    {{-- @dd($user->toArray()) --}}
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -236,6 +237,42 @@
                                     <input class="form-control" type="file" name="documents[]" multiple>
                                 </div>
                             </div>
+                            <div class="col-md-12 mt-3">
+                                @foreach ($user->documents as $document)
+                                    <div class="card border shadow-none mb-2 py-2">
+                                        <div class="d-flex align-items-center justify-content-between ">
+                                            <div class="d-flex justify-content-between ">
+                                                <div class="avatar-xs align-self-center me-2">
+                                                    <div
+                                                        class="avatar-title rounded bg-transparent text-primary font-size-20">
+                                                        <i class="mdi mdi-file-document"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="overflow-hidden me-auto">
+                                                    <h5 class="font-size-13 text-truncate mb-1">{{ $document->name }}
+                                                    </h5>
+                                                    <p class="text-muted text-truncate mb-0">21 Files</p>
+                                                </div>
+                                            </div>
+                                            <div class="ms-2 d-flex align-items-center justify-content-between gap-1">
+                                                <p>
+                                                    <a href="{{ Storage::url($document->file_path) }}"
+                                                        class="text-sucess btn fw-bolder" download>
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
+                                                </p>
+                                                <p>
+                                                    <a href="{{ route('delete.document' , ['id' => $document->id]) }}"
+                                                        class="text-danger btn fw-bolder">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         <hr>
                         <div>
@@ -247,8 +284,11 @@
         </div>
     </div>
 
+
+
+
     <script>
-           $(document).ready(function() {
+        $(document).ready(function() {
             $('#leave_box').hide();
             $('#job_type').change(function() {
                 var jobType = $(this).val();
