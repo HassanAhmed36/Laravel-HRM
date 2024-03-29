@@ -66,7 +66,7 @@ class EmployeeService
                 if ($request->hasFile('documents')) {
                     foreach ($request->file('documents') as $document) {
                         $filePath = $document->store('documents');
-                        $document =  Document::create([
+                        $document = Document::create([
                             'user_id' => $user->id,
                             'file_path' => $filePath,
                             'name' => $document->getClientOriginalName()

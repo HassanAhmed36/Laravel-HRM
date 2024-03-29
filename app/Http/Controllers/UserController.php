@@ -36,11 +36,7 @@ class UserController extends Controller
     {
         try {
             $result = $this->employeeService->createUser($request);
-            if ($result) {
                 return redirect()->route('employee.index')->with('success', 'Employee added successfully');
-            } else {
-                return back()->with('error', 'User registration failed!');
-            }
         } catch (\Exception $e) {
             return back()->with('error', 'An error occurred while processing the request.');
         }
@@ -55,11 +51,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::with([
-            'employeeLeave',
+            'employee_leave',
             'designation',
-            'employeeBasicInfo',
-            'employementInfo',
-            'bankDetails',
+            'employee_basic_info',
+            'employement_info',
+            'bank_details',
             'documents'
         ])->find($id);
         $designations = Designation::all();
@@ -71,7 +67,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->toArray());
     }
 
     /**

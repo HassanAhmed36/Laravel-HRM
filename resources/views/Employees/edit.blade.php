@@ -83,7 +83,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Salary</label>
                                     <input type="number" class="form-control" id=""
-                                        placeholder="Enter Your Salery" name="salary" value="{{ $user->salary }}">
+                                        placeholder="Enter Your Salery" name="salary" value="{{ $user->employement_info->salary ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -91,9 +91,9 @@
                                     <label for="formrow-inputState" class="form-label">Job Type</label>
                                     <select class="form-select" name="job_type" id="job_type">
                                         <option selected>Choose...</option>
-                                        <op value="0" @selected($user->employementInfo->job_type == 0)>Internee</option>
-                                            <option value="1" @selected($user->employementInfo->job_type == 1)>probation</option>
-                                            <option value="2" @selected($user->employementInfo->job_type == 2)>Permenant</option>
+                                        <op value="0" @selected($user->employement_info->job_type == 0)>Internee</option>
+                                            <option value="1" @selected($user->employement_info->job_type == 1)>probation</option>
+                                            <option value="2" @selected($user->employement_info->job_type == 2)>Permenant</option>
                                     </select>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                         <input type="text" class="form-control" placeholder="dd M, yyyy"
                                             data-date-format="dd M, yyyy" data-date-container='#datepicker1'
                                             data-provide="datepicker" name="date_of_birth"
-                                            value="{{ $user->employeeBasicInfo->date_of_birth }}">
+                                            value="{{ $user->employee_basic_info->date_of_birth }}">
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">phone Number</label>
                                     <input type="tel" class="form-control" id="" placeholder="+123456789"
-                                        name="phone_number" value="{{ $user->employeeBasicInfo->phone_number }}">
+                                        name="phone_number" value="{{ $user->employee_basic_info->phone_number }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -170,13 +170,13 @@
                                     <label for="" class="form-label">personal email</label>
                                     <input type="tel" class="form-control" id=""
                                         placeholder="Enter Personal Email" name="personal_email"
-                                        value="{{ $user->employeeBasicInfo->personal_email }}">
+                                        value="{{ $user->employee_basic_info->personal_email }}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Address</label>
-                                    <textarea name="" rows="4" class="form-control" name="address">{{ $user->employeeBasicInfo->address }}</textarea>
+                                    <textarea name="" rows="4" class="form-control" name="address">{{ $user->employee_basic_info->address }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -188,7 +188,7 @@
                                     <label for="" class="form-label">Account Number</label>
                                     <input type="text" class="form-control" id=""
                                         placeholder="Enter Your Account Number" name="account_number"
-                                        value="{{ $user->bankDetails->account_number }}">
+                                        value="{{ $user->bank_details->account_number }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -196,7 +196,7 @@
                                     <label for="" class="form-label">Account Holder Name</label>
                                     <input type="text" class="form-control" id=""
                                         placeholder="Enter Account Holder Name" name="account_holder_name"
-                                        value="{{ $user->bankDetails->account_holder_name }}">
+                                        value="{{ $user->bank_details->account_holder_name }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -204,7 +204,7 @@
                                     <label for="" class="form-label">IBAN</label>
                                     <input type="text" class="form-control" id=""
                                         placeholder="Enter IBAN Number" name="IBAN"
-                                        value="{{ $user->bankDetails->IBAN }}">
+                                        value="{{ $user->bank_details->IBAN }}">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -215,7 +215,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Shift Start Time</label>
                                     <input class="form-control" type="time"
-                                        value="{{ $user->employementInfo->shift_start_time }}" id="example-time-input"
+                                        value="{{ $user->employement_info->shift_start_time }}" id="example-time-input"
                                         name="shift_start_timing">
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Shift End Time</label>
                                     <input class="form-control" type="time"
-                                        value="{{ $user->employementInfo->shift_end_time }}" id="example-time-input"
+                                        value="{{ $user->employement_info->shift_end_time }}" id="example-time-input"
                                         name="shift_end_timing">
                                 </div>
                             </div>

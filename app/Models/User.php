@@ -50,19 +50,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Designation::class, 'designation_id');
     }
-    public function employeeBasicInfo()
+    public function employee_basic_info()
     {
         return $this->hasOne(EmployeeBasicInfo::class, 'user_id');
     }
-    public function employementInfo()
+    public function employement_info()
     {
         return $this->hasOne(EmploymentDetails::class, 'user_id');
     }
-    public function bankDetails()
+    public function bank_details()
     {
         return $this->hasOne(EmployeeBankDetail::class, 'user_id');
     }
-    public function employeeLeave()
+    public function employee_leave()
     {
         return $this->hasOne(EmployeeLeave::class, 'user_id');
     }
