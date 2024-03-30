@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $month = $request->month ?? Carbon::now()->month(); 
+        $query = Attendance::whereMonth('created_at', $month);
+        if (!in_array(Auth::user()->designation->id, [1, 2])) {
+            $query->where('id', Auth::user()->id);
+        }
+        $attendance = $query->get();
+        return view('Attendance.index', compact('attendance'));
     }
+
 
     /**
      * Show the form for creating a new resource.

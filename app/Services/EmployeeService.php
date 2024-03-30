@@ -8,6 +8,8 @@ use App\Models\EmployeeBasicInfo;
 use App\Models\EmployeeLeave;
 use App\Models\EmploymentDetails;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -86,12 +88,14 @@ class EmployeeService
             return back()->with('error', 'An error occurred while processing the request.');
         }
     }
+
     public function getEmployeeID()
     {
         $latestEmployee = User::withTrashed()->latest()->first();
         $currentNumber = $latestEmployee ? $latestEmployee->id + 1 : 1;
         return 'EMP-' . $currentNumber;
     }
+
     public function delete_document($id)
     {
         try {
@@ -102,4 +106,94 @@ class EmployeeService
             return back()->with('error', 'Document deletion failed!');
         }
     }
+
+    public function profile_page($id)
+    {
+        if ($id != Auth::user()->id) {
+            return back()->with('error', 'Not Authorized!');
+        }
+        $user = User::with([
+            'designation',
+            'employee_basic_info',
+            'employement_info',
+            'bank_details',
+        ])->find($id);
+        // dd($user->toArray());
+        return view('Employees.profile', compact('user'));
+    }
+
+    public function update_personal_information(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'date_of_birth' => 'required',
+            'cnic' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'personal_email' => 'required',
+            'profile_image' => 'image',
+        ]);
+
+        try {
+            $user = EmployeeBasicInfo::where('user_id', $request->user_id)->firstOrFail();
+            if ($user->user_id != Auth::id()) {
+                return back()->with('error', 'Not Authorized!');
+            }
+            $user->update([
+                'date_of_birth' => $request->date_of_birth,
+                'cnic' => $request->cnic,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'personal_email' => $request->personal_email,
+            ]);
+
+            if ($request->hasFile('profile_image')) {
+                $path = $request->file('profile_image')->store('profile_images');
+                $user->profile_image = $path;
+                $user->save();
+            }
+            return back()->with('success', 'Personal information updated successfully');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return back()->with('error', 'Personal Information Updation failed');
+        }
+    }
+
+    public function update_password(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+        try {
+            User::find($request->user_id)->update([
+                'password' => Hash::make($request->password)
+            ]);
+            return back()->with('success', 'password updated successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'password updated failed!');
+        }
+    }
+
+    public function bank_details(Request $request)
+    {   
+        $request->validate([
+            'account_holder_name' => 'required',
+            'account_number' => 'required',
+            'IBAN' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        try {
+            EmployeeBankDetail::find($request->user_id)->update([
+                'account_holder_name' => $request->account_holder_name,
+                'account_number' => $request->account_number,
+                'IBAN' => $request->IBAN,
+            ]);
+            return back()->with('success', 'bank details updated successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'bank details updated failed!');
+        }
+    }
+
 }

@@ -37,9 +37,9 @@ class DepartmentController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $department = Department::findOrFail($id);
+        $department = Department::findOrFail($request->id);
         return response()->json(['department' => $department]);
     }
 
@@ -70,5 +70,4 @@ class DepartmentController extends Controller
             return back()->with('error', 'Department deletion failed!');
         }
     }
-    
 }

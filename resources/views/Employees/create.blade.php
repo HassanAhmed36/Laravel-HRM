@@ -171,10 +171,17 @@
                                         value="{{ old('personal_email') }}">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">CNIC</label>
+                                    <input type="text" class="form-control" id=""
+                                        placeholder="Enter CNIC number" name="cnic" value="{{ old('cnic') }}">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Address</label>
-                                    <textarea name="" rows="4" class="form-control" name="address">{{ old('address') }}</textarea>
+                                    <textarea rows="4" class="form-control" name="address">{{ old('address') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">

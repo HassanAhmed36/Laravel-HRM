@@ -163,8 +163,6 @@
                 dataType: "json",
                 success: function(response) {
                     console.log(response);
-
-                    // Set the values in the modal
                     $('#designation_name').val(response.designation.name);
                     $('#d_id').val(response.designation.id);
                     $('.is_active').prop('checked', response.designation.is_active == 1);

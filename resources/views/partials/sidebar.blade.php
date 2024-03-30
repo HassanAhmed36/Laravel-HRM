@@ -12,64 +12,30 @@
 
                  </li>
                  <li class="menu-title" key="t-apps">Modules</li>
-
                  <li>
                      <a href="{{ route('employee.index') }}" class=" waves-effect">
                          <i class="bx bxs-user-detail"></i>
                          <span key="t-contacts">Employee</span>
                      </a>
-                 <li>
-                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="bx bx-store"></i>
-                         <span key="t-ecommerce">Organizational Setting</span>
-                     </a>
-                     <ul class="sub-menu" aria-expanded="false">
-                         <li><a href="{{ route('department.index') }}" key="t-products">Departments</a></li>
-                         <li><a href="{{ route('designation.index') }}" key="t-product-detail">Designations</a>
-                         </li>
-                     </ul>
                  </li>
-
                  <li>
-                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                     <a href="{{ route('department.index') }}" class=" waves-effect">
                          <i class="bx bx-bitcoin"></i>
-                         <span key="t-crypto">Crypto</span>
+                         <span key="t-crypto">Departments</span>
                      </a>
-                     <ul class="sub-menu" aria-expanded="false">
-                         <li><a href="crypto-wallet.html" key="t-wallet">Wallet</a></li>
-                         <li><a href="crypto-buy-sell.html" key="t-buy">Buy/Sell</a></li>
-                         <li><a href="crypto-exchange.html" key="t-exchange">Exchange</a></li>
-                         <li><a href="crypto-lending.html" key="t-lending">Lending</a></li>
-                         <li><a href="crypto-orders.html" key="t-orders">Orders</a></li>
-                         <li><a href="crypto-kyc-application.html" key="t-kyc">KYC Application</a></li>
-                         <li><a href="crypto-ico-landing.html" key="t-ico">ICO Landing</a></li>
-                     </ul>
                  </li>
-
                  <li>
-                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="bx bx-envelope"></i>
-                         <span key="t-email">Email</span>
+                     <a href="{{ route('designation.index') }}" class=" waves-effect">
+                         <i class="bx bx-bitcoin"></i>
+                         <span key="t-crypto">Designations</span>
                      </a>
-                     <ul class="sub-menu" aria-expanded="false">
-                         <li><a href="email-inbox.html" key="t-inbox">Inbox</a></li>
-                         <li><a href="email-read.html" key="t-read-email">Read Email</a></li>
-                         <li>
-                             <a href="javascript: void(0);">
-                                 <span key="t-email-templates">Templates</span>
-                             </a>
-                             <ul class="sub-menu" aria-expanded="true">
-                                 <li><a href="email-template-basic.html" key="t-basic-action">Basic Action</a>
-                                 </li>
-                                 <li><a href="email-template-alert.html" key="t-alert-email">Alert Email</a>
-                                 </li>
-                                 <li><a href="email-template-billing.html" key="t-bill-email">Billing Email</a>
-                                 </li>
-                             </ul>
-                         </li>
-                     </ul>
                  </li>
-
+                 <li>
+                     <a href="{{ route('attendance.index') }}" class="waves-effect">
+                         <i class="bx bx-envelope"></i>
+                         <span key="bx bx-task">Attendance</span>
+                     </a>
+                 </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
                          <i class="bx bx-receipt"></i>

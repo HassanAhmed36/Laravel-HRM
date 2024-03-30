@@ -5,10 +5,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="card-title fs-4 fw-semibold">All Departments</h3>
+                        <h3 class="card-title fs-4 fw-semibold">Attendance</h3>
                         <div>
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> new Department</button>
+                                data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> Mark Attedance</button>
                         </div>
                     </div>
                     <hr>
@@ -17,13 +17,15 @@
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th>Department name</th>
+                                <th>UserName</th>
+                                <th>Check In</th>
+                                <th>Check In</th>
                                 <th>status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($departments as $department)
+                            {{-- @foreach ($departments as $department)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $department->name }}</td>
@@ -51,7 +53,7 @@
 
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -59,7 +61,6 @@
         </div>
     </div>
     <div>
-
         <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -134,23 +135,21 @@
         $('.edit-department').click(function(e) {
             e.preventDefault();
             var departmentId = $(this).data('id');
-            var url = "{{ route('department-edit') }}";
-            $.ajax({
-                url: url,
-                method: "GET",
-                data: {
-                    id: departmentId
-                },
-                success: function(response) {
-                    $('#department_name').val(response.department.name);
-                    $('#d_id').val(response.department.id);
-                    $('.is_active').prop('checked', response.department.is_active == 1);
-                    $('#editModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+            var url = `{{ url('department-edit') }}/${departmentId}`;
+            // $.ajax({
+            //     url: url,
+            //     method: "GET",
+            //     dataType: "json",
+            //     success: function(response) {
+            //         $('#department_name').val(response.department.name);
+            //         $('#d_id').val(response.department.id);
+            //         $('.is_active').prop('checked', response.department.is_active == 1);
+            //         $('#editModal').modal('show');
+            //     },
+            //     error: function(xhr, status, error) {
+            //         console.error(xhr.responseText);
+            //     }
+            // });
         });
     </script>
 @endsection
