@@ -91,7 +91,7 @@ class EmployeeService
 
     public function getEmployeeID()
     {
-        $latestEmployee = User::withTrashed()->latest()->first();
+        $latestEmployee = User::orderByDesc('id')->withTrashed()->latest()->first();
         $currentNumber = $latestEmployee ? $latestEmployee->id + 1 : 1;
         return 'EMP-' . $currentNumber;
     }
@@ -176,7 +176,7 @@ class EmployeeService
     }
 
     public function bank_details(Request $request)
-    {   
+    {
         $request->validate([
             'account_holder_name' => 'required',
             'account_number' => 'required',

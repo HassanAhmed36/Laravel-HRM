@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Attendance;
 
 class AttendanceSeeder extends Seeder
 {
@@ -12,28 +15,30 @@ class AttendanceSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::pluck('id');
+        // Get all user ids
+        $userIds = User::pluck('id')->toArray();
+
+        // Set current and previous month start dates
         $currentMonth = Carbon::now()->startOfMonth();
         $previousMonth = Carbon::now()->subMonth()->startOfMonth();
-        foreach ($users as $user) {
-           
-            for ($day = 1; $day <= $currentMonth->daysInMonth; $day++) {
+
+        // Set check-in and check-out times
+        $checkIn = '09:00';
+        $checkOut = '17:00';
+
+        // Seed attendance records for current month
+        foreach ($userIds as $userId) {
+            $daysInMonth = $currentMonth->daysInMonth;
+
+            for ($day = 1; $day <= $daysInMonth; $day++) {
                 Attendance::create([
-                    'user_id' => $user,
-                    'created_at' => $currentMonth->copy()->addDays($day - 1), 
+                    'user_id' => $userId,
+                    'check_in' => $checkIn,
+                    'check_out' => $checkOut,
+                    'created_at' => $currentMonth->copy()->addDays($day - 1),
                     'status' => 1,
                 ]);
             }
-
-            for ($day = 1; $day <= $previousMonth->daysInMonth; $day++) {
-                Attendance::create([
-                    'user_id' => $user,
-                    'created_at' => $previousMonth->copy()->addDays($day - 1), date
-                    'status' => 0, 
-                ]);
-            }
         }
-
-        return 'Attendance migration completed successfully!';
     }
 }

@@ -134,7 +134,7 @@
         $('.edit-department').click(function(e) {
             e.preventDefault();
             var departmentId = $(this).data('id');
-            var url = "{{ route('department-edit') }}";
+            var url = "{{ route('department.edit') }}";
             $.ajax({
                 url: url,
                 method: "GET",

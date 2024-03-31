@@ -12,16 +12,21 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index(Request $request)
     {
-        $month = $request->month ?? Carbon::now()->month(); 
-        $query = Attendance::whereMonth('created_at', $month);
-        if (!in_array(Auth::user()->designation->id, [1, 2])) {
-            $query->where('id', Auth::user()->id);
+        $date = $request->date ? Carbon::parse($request->date)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+
+
+        $query = Attendance::with('user')->whereDate('created_at', $date);
+        if (!in_array(Auth::user()->designation_id, [1, 2])) {
+            $query->where('user_id', Auth::user()->id);
         }
-        $attendance = $query->get();
-        return view('Attendance.index', compact('attendance'));
+        $attendances = $query->get();
+        return view('Attendance.index', compact('attendances'));
     }
+
 
 
     /**

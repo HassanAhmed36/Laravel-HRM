@@ -10,6 +10,7 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
 use App\Models\Designation;
+use App\Services\AttendanceService;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,14 @@ Route::middleware('check.auth')->group(function () {
 
     Route::prefix('Attendance')->group(function () {
         Route::get('/', [AttendanceController::class, 'index'])->name('attendance.index');
+        Route::get('/check-in', [AttendanceService::class, 'CheckIn'])->name('check.in');
+        Route::get('/checkOut', [AttendanceService::class, 'CheckOut'])->name('check.out');
+
+
+        Route::get('/get-attendance-data' , [AttendanceService::class , 'getAttendanceData'])->name('get.attendance.data');
+        Route::post('/update-attendance' , [AttendanceService::class , 'markAttendance'])->name('attendance.update');
     });
+
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

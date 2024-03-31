@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Document::class, 'user_id');
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'user_id');
+    }
 }
