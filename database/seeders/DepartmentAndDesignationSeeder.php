@@ -17,10 +17,13 @@ class DepartmentAndDesignationSeeder extends Seeder
         $department = Department::insert([
             ['name' => 'Adminstration', 'is_active' => 1],
             ['name' => 'Human Resources', 'is_active' => 1],
+            ['name' => 'Developement', 'is_active' => 1],
         ]);
         $designation = Designation::insert([
             ['name' => 'Admin', 'department_id' => 1,  'is_active' => 1],
             ['name' => 'HR', 'department_id' => 2,  'is_active' => 1],
+            ['name' => 'Backend Developer', 'department_id' => 3,  'is_active' => 1],
+            ['name' => 'Wordpress Developer', 'department_id' => 3,  'is_active' => 1],
         ]);
 
     }

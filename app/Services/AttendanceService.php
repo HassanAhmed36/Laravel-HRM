@@ -49,33 +49,6 @@ class AttendanceService
             return back()->with('error', 'Attendance not  mark !');
         }
     }
-    public function getAttendanceData(Request $request)
-    {
-        $attendance = Attendance::find($request->id);
-        return view('partials.modals.attendance-modal', compact('attendance'))->render();
-    }
-    public function markAttendance(Request $request)
-    {
-        $attendance = Attendance::where('user_id', $request->user_id)
-            ->where('created_at', $request->created_at)
-            ->first();
-
-        $status = $request->mark_full_day ? 1 : 4;
-        if ($attendance) {
-            $attendance->update([
-                'check_in' => $request->check_in,
-                'check_out' => $request->check_out,
-                'status' => $status
-            ]);
-        } else {
-            Attendance::create([
-                'user_id' => $request->user_id,
-                'check_in' => $request->check_in,
-                'check_out' => $request->check_out,
-                'status' => $status
-            ]);
-        }
-        return back()->with('success', 'Attendance marked Successfully');
-    }
+   
 
 }

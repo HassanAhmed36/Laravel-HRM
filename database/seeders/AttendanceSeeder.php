@@ -15,27 +15,21 @@ class AttendanceSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get all user ids
         $userIds = User::pluck('id')->toArray();
 
-        // Set current and previous month start dates
-        $currentMonth = Carbon::now()->startOfMonth();
+        // $currentMonth = Carbon::now()->startOfMonth();
         $previousMonth = Carbon::now()->subMonth()->startOfMonth();
-
-        // Set check-in and check-out times
         $checkIn = '09:00';
         $checkOut = '17:00';
 
-        // Seed attendance records for current month
         foreach ($userIds as $userId) {
-            $daysInMonth = $currentMonth->daysInMonth;
-
+            $daysInMonth = $previousMonth->daysInMonth;
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 Attendance::create([
                     'user_id' => $userId,
                     'check_in' => $checkIn,
                     'check_out' => $checkOut,
-                    'created_at' => $currentMonth->copy()->addDays($day - 1),
+                    'created_at' => $previousMonth->copy()->addDays($day - 1),
                     'status' => 1,
                 ]);
             }

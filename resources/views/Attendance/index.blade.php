@@ -7,8 +7,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Attendance</h3>
                         <div>
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> Mark Attedance</button>
+                            <form action="" method="GET" class="d-flex gap-2">
+                                <input type="date" class="form-control" name="date">
+                                <button class="btn btn-primary">Filter</button>
+                            </form>
                         </div>
                     </div>
                     <hr>

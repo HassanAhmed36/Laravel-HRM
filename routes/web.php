@@ -7,13 +7,14 @@ use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\LeaveQuotaController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
 use App\Models\Designation;
 use App\Services\AttendanceService;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::redirect('/', '/login');
@@ -62,12 +63,17 @@ Route::middleware('check.auth')->group(function () {
         Route::get('/', [AttendanceController::class, 'index'])->name('attendance.index');
         Route::get('/check-in', [AttendanceService::class, 'CheckIn'])->name('check.in');
         Route::get('/checkOut', [AttendanceService::class, 'CheckOut'])->name('check.out');
-
-
-        Route::get('/get-attendance-data' , [AttendanceService::class , 'getAttendanceData'])->name('get.attendance.data');
-        Route::post('/update-attendance' , [AttendanceService::class , 'markAttendance'])->name('attendance.update');
+        Route::get('/get-attendance-data', [AttendanceController::class, 'show'])->name('get.attendance.data');
+        Route::post('/update-attendance', [AttendanceController::class, 'markAttendance'])->name('attendance.update');
     });
 
+    Route::prefix('Leaves')->group(function () {
+        Route::get('/', [LeaveController::class, 'index'])->name('leave.index');
+        Route::post('/mark-leave', [LeaveController::class, 'store'])->name('leave.store');
+        Route::get('/delete-leave/{id}', [LeaveController::class, 'destroy'])->name('delete.leave');
+
+        Route::get('/leave-quota', [LeaveQuotaController::class, 'index'])->name('leave.quota');
+    });
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

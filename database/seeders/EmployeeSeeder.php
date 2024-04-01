@@ -6,6 +6,7 @@ use App\Models\EmployeeBankDetail;
 use App\Models\EmployeeBasicInfo;
 use App\Models\EmployeeLeave;
 use App\Models\EmploymentDetails;
+use App\Models\LeaveQuota;
 use App\Models\User;
 use App\Services\EmployeeService;
 use Carbon\Carbon;
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run()
     {
         DB::beginTransaction();
@@ -32,7 +31,7 @@ class EmployeeSeeder extends Seeder
             ]);
 
             if ($user) {
-                $employeeInfo = EmployeeBasicInfo::create([
+                EmployeeBasicInfo::create([
                     'date_of_birth' => Carbon::now(),
                     'cnic' => '123465798',
                     'phone_number' => '123456798',
@@ -41,7 +40,7 @@ class EmployeeSeeder extends Seeder
                     'user_id' => $user->id,
                 ]);
 
-                $employeeDetail = EmploymentDetails::create([
+                EmploymentDetails::create([
                     'salary' => '10000',
                     'job_type' => 2,
                     'shift_start_time' => '09:00',
@@ -50,17 +49,24 @@ class EmployeeSeeder extends Seeder
                     'user_id' => $user->id,
                 ]);
 
-                $bankDetail = EmployeeBankDetail::create([
+                EmployeeBankDetail::create([
                     'account_holder_name' => 'Jhon Deo',
                     'account_number' => '123456789',
                     'IBAN' => 'IBAN',
                     'user_id' => $user->id,
                 ]);
 
-                $employeeLeave = EmployeeLeave::create([
-                    'sick_leave' => 0,
-                    'casual_leave' => 0,
-                    'annual_leave' => 0,
+                EmployeeLeave::create([
+                    'sick_leave' => 7,
+                    'casual_leave' => 10,
+                    'annual_leave' => 14,
+                    'user_id' => $user->id,
+                ]);
+                LeaveQuota::create([
+                    'sick_leave' => 7,
+                    'casual_leave' => 10,
+                    'annual_leave' => 14,
+                    'unpaid_leave' => 0,
                     'user_id' => $user->id,
                 ]);
                 DB::commit();

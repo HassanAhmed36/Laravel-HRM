@@ -7,6 +7,7 @@ use App\Models\EmployeeBankDetail;
 use App\Models\EmployeeBasicInfo;
 use App\Models\EmployeeLeave;
 use App\Models\EmploymentDetails;
+use App\Models\LeaveQuota;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class EmployeeService
                 if ($request->hasFile('profile_image')) {
                     $path = $request->file('profile_image')->store('profile_images');
                 }
-                $employeeInfo = EmployeeBasicInfo::create([
+                EmployeeBasicInfo::create([
                     'date_of_birth' => $request->date_of_birth,
                     'cnic' => $request->cnic,
                     'phone_number' => $request->phone_number,
@@ -42,8 +43,7 @@ class EmployeeService
                     'profile_image' => $path,
                     'user_id' => $user->id,
                 ]);
-
-                $employeeDetail = EmploymentDetails::create([
+                EmploymentDetails::create([
                     'salary' => $request->salary,
                     'job_type' => $request->job_type,
                     'shift_start_time' => $request->shift_start_timing,
@@ -51,20 +51,25 @@ class EmployeeService
                     'joining_date' => $request->joining_date,
                     'user_id' => $user->id,
                 ]);
-
-                $bankDetail = EmployeeBankDetail::create([
+                EmployeeBankDetail::create([
                     'account_holder_name' => $request->account_holder_name,
                     'account_number' => $request->account_number,
                     'IBAN' => $request->IBAN,
                     'user_id' => $user->id,
                 ]);
-                $employeeLeave = EmployeeLeave::create([
+                EmployeeLeave::create([
                     'sick_leave' => $request->sick_leave,
                     'casual_leave' => $request->casual_leave,
                     'annual_leave' => $request->annual_leave,
                     'user_id' => $user->id,
                 ]);
-
+                LeaveQuota::create([
+                    'sick_leave' => $request->sick_leave,
+                    'casual_leave' => $request->casual_leave,
+                    'annual_leave' => $request->annual_leave,
+                    'unpaid_leave' => 0,
+                    'user_id' => $user->id,
+                ]);
                 if ($request->hasFile('documents')) {
                     foreach ($request->file('documents') as $document) {
                         $filePath = $document->store('documents');
@@ -73,7 +78,6 @@ class EmployeeService
                             'file_path' => $filePath,
                             'name' => $document->getClientOriginalName()
                         ]);
-                        dd($document);
                     }
                 }
                 DB::commit();
@@ -91,7 +95,7 @@ class EmployeeService
 
     public function getEmployeeID()
     {
-        $latestEmployee = User::orderByDesc('id')->withTrashed()->latest()->first();
+        $latestEmployee = User::orderByDesc('id')->withTrashed()->first();
         $currentNumber = $latestEmployee ? $latestEmployee->id + 1 : 1;
         return 'EMP-' . $currentNumber;
     }

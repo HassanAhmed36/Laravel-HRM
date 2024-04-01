@@ -11,7 +11,6 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('assets/js/plugin.js') }}"></script>
     <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
@@ -59,13 +58,17 @@
         <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
         <script>
             $('#datatable').DataTable();
-            @session('success')
-            toastr.success("{{ session('success') }}");
-            @endsession
-            @session('error')
-            toastr.error("{{ session('error') }}");
-            @endsession
         </script>
+        @session('success')
+            <script>
+                toastr.success("{{ session('success') }}");
+            </script>
+        @endsession
+        @session('error')
+            <script>
+                toastr.error("{{ session('error') }}");
+            </script>
+        @endsession
 </body>
 
 </html>

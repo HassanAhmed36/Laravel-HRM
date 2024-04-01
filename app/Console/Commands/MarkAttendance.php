@@ -14,7 +14,7 @@ class MarkAttendance extends Command
      *
      * @var string
      */
-    protected $signature = 'app:mark-attendance';
+    protected $signature = 'mark-attendance';
 
     /**
      * The console command description.

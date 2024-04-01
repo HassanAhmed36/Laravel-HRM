@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leaves', function (Blueprint $table) {
+        Schema::create('leave_quotas', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->text('reason');
-            $table->string('leave_type');
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->integer('sick_leave');
+            $table->integer('casual_leave');
+            $table->integer('annual_leave');
+            $table->integer('unpaid_leave');
+            $table->foreignId('user_id')->constrained('users' , 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leaves');
+        Schema::dropIfExists('leave_quotas');
     }
 };
