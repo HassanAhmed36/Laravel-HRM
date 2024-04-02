@@ -10,6 +10,7 @@ use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveQuotaController;
 use App\Http\Controllers\PayslipController;
@@ -101,6 +102,15 @@ Route::middleware('check.auth')->group(function () {
             Route::get('/edit', [DeductionController::class, 'edit'])->name('deduction.edit');
             Route::post('/update', [DeductionController::class, 'update'])->name('deduction.update');
         });
+    });
+
+    Route::prefix('job')->group(function () {
+        Route::get('/', [JobController::class, 'index'])->name('job.index');
+        Route::post('/store', [JobController::class, 'store'])->name('job.store');
+        Route::get('/show/{id}', [JobController::class, 'show'])->name('job.show');
+        Route::get('/edit', [JobController::class, 'edit'])->name('job.edit');
+        Route::post('/update/{id}', [JobController::class, 'update'])->name('job.update');
+        Route::get('/delete', [JobController::class, 'destroy'])->name('job.delete');
     });
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

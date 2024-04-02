@@ -5,10 +5,12 @@
         <div class="col-12 mb-2">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h3 class="mb-sm-0 fw-semibold font-size-18">Dashboard</h3>
-                @if ($attendance->check_in == null && $attendance->check_out == null)
-                    <a class="btn btn-primary" href="{{ route('check.in') }}">Check In</a>
-                @elseif ($attendance->check_in != null && $attendance->check_out == null)
-                    <a class="btn btn-primary" href="{{ route('check.out') }}">Check Out</a>
+                @if ($attendance)
+                    @if ($attendance->check_in == null && $attendance->check_out == null)
+                        <a class="btn btn-primary" href="{{ route('check.in') }}">Check In</a>
+                    @elseif ($attendance->check_in != null && $attendance->check_out == null)
+                        <a class="btn btn-primary" href="{{ route('check.out') }}">Check Out</a>
+                    @endif
                 @endif
             </div>
         </div>

@@ -21,27 +21,29 @@ class PayslipController extends Controller
     public function downloadPaySlip(Request $request)
     {
         if ($request->month === Carbon::now()->format('Y-m')) {
-            return back()->with('Error!', 'Payslip for the current month will be generated after the month ends.');
+            return back()->with('error', 'Payslip for the current month will be generated after the month ends.');
         }
-        $user = User::find($request->user_id);
+        $user = User::with('employement_info')->find($request->user_id);
         if (!$user) {
-            return back()->with('Error!', 'User not found.');
+            return back()->with('error', 'User not found.');
         }
-        $basicSalarywithoutDetaction = $user->basic_info->Basic_Salary;
-        $basicSalary = $user->basic_info->Basic_Salary;
+        $basicSalarywithoutDetaction = $user->employement_info->salary;
+        $basicSalary = $user->employement_info->salary;
 
         $unpaidDetaction = Deduction::find(1);
-        $halfDetaction = Deduction::find(3);
+        $halfDetaction = Deduction::find(2);
 
         $allowance = Allowance::where('month', Carbon::parse($request->month)->format('Y-m'))
             ->where('user_id', $user->id)
             ->first();
+
         $monthlyAllowance = $allowance ? $allowance->amount : 0;
 
         $attendances = Attendance::where('user_id', $user->id)
             ->whereYear('created_at', Carbon::parse($request->month)->year)
             ->whereMonth('created_at', Carbon::parse($request->month)->month)
             ->get();
+
         $unpaid_Leave_Count = 0;
         $halfDay_Count = 0;
         $halfdayDetactAmmount = 0;
@@ -61,8 +63,8 @@ class PayslipController extends Controller
         $salaryMinusLeave = $basicSalary;
         $DetactedAmount = $basicSalarywithoutDetaction - $basicSalary;
         $salarywithBonus = $basicSalary + $monthlyAllowance;
-        $leaveDetact = $oneDaySalary  * $unpaid_Leave_Count;
-        $percentage = $halfDetaction->detact_amount  / 100;
+        $leaveDetact = $oneDaySalary * $unpaid_Leave_Count;
+        $percentage = $halfDetaction->deduct_amount / 100;
         $halfdaydetaction = 0;
         if ($halfDay_Count != 0) {
             $halfdaydetaction = ($oneDaySalary * $percentage) / $halfDay_Count;

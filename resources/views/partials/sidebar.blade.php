@@ -35,11 +35,11 @@
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a  class="waves-effect has-arrow">
+                    <a class="waves-effect has-arrow">
                         <i class="bx bx-calendar"></i>
                         <span key="t-invoices">Leaves</span>
-                    </a>    
-                      <ul class="sub-menu" aria-expanded="false">
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
                         <li class="mb-2"><a href="{{ route('leave.index') }}" key="t-p-grid">Mark Leave</a></li>
                         <li class="mb-2"><a href="{{ route('leave.quota') }}" key="t-p-list">Leave Quota</a></li>
                         <li class="mb-2"><a href="{{ route('holiday.index') }}" key="t-p-list">Holiday</a></li>
@@ -52,13 +52,13 @@
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="{{route('payslip.index')}}" class="waves-effect">
+                    <a href="{{ route('payslip.index') }}" class="waves-effect">
                         <i class="bx bx-receipt"></i>
                         <span key="t-projects">PaySlip</span>
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a href="{{ route('job.index') }}" class="waves-effect">
                         <i class="bx bx-briefcase"></i>
                         <span key="t-tasks">Jobs</span>
                     </a>
@@ -88,8 +88,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li class="mb-2"><a href="projects-grid.html" key="t-p-grid">Website Settings</a></li>
-                   
-                        <li class="mb-2"><a href="{{ route('deduction.index') }}" key="t-p-overview">Deduction Settings</a></li>
+
+                        <li class="mb-2"><a href="{{ route('deduction.index') }}" key="t-p-overview">Deduction
+                                Settings</a></li>
                     </ul>
                 </li>
             </ul>
