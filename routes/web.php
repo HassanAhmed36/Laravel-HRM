@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\AllowanceController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgetPassword;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveQuotaController;
+use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
 use App\Models\Designation;
@@ -71,8 +75,32 @@ Route::middleware('check.auth')->group(function () {
         Route::get('/', [LeaveController::class, 'index'])->name('leave.index');
         Route::post('/mark-leave', [LeaveController::class, 'store'])->name('leave.store');
         Route::get('/delete-leave/{id}', [LeaveController::class, 'destroy'])->name('delete.leave');
-
         Route::get('/leave-quota', [LeaveQuotaController::class, 'index'])->name('leave.quota');
+    });
+
+    Route::prefix('Holiday')->group(function () {
+        Route::get('/', [HolidayController::class, 'index'])->name('holiday.index');
+        Route::post('/store', [HolidayController::class, 'store'])->name('holiday.store');
+        Route::get('/edit', [HolidayController::class, 'edit'])->name('holiday.edit');
+        Route::post('/update', [HolidayController::class, 'update'])->name('holiday.update');
+        Route::get('/delete/{id}', [HolidayController::class, 'destroy'])->name('holiday.delete');
+    });
+
+    Route::prefix('Allowance')->group(function () {
+        Route::get('/', [AllowanceController::class, 'index'])->name('allowance.index');
+        Route::post('/store', [AllowanceController::class, 'store'])->name('allowance.store');
+        Route::get('/delete/{id}', [AllowanceController::class, 'destroy'])->name('allowance.delete');
+    });
+    Route::prefix('payslip')->group(function () {
+        Route::get('/', [PayslipController::class, 'index'])->name('payslip.index');
+        Route::post('/download-payslip', [PayslipController::class, 'downloadPaySlip'])->name('download.payslip.index');
+    });
+    Route::prefix('Setting')->group(function () {
+        Route::prefix('Deduction')->group(function () {
+            Route::get('/', [DeductionController::class, 'index'])->name('deduction.index');
+            Route::get('/edit', [DeductionController::class, 'edit'])->name('deduction.edit');
+            Route::post('/update', [DeductionController::class, 'update'])->name('deduction.update');
+        });
     });
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

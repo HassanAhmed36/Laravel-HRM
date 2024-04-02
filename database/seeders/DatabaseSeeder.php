@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentAndDesignationSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(EmployeeSeeder::class);
-        $this->call(AttendanceSeeder::class);
+        // $this->call(AttendanceSeeder::class);
+        $this->call(DeductionSeeder::class);
     }
 }

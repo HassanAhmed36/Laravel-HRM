@@ -84,6 +84,7 @@ class LeaveController extends Controller
             DB::commit();
             return back()->with('success', 'Leave applied successfully!');
         } catch (\Exception $e) {
+            DB::rollBack();
             dd($e->getMessage());
             return back()->with('error', 'Leave applied Failed!');
         }
