@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgetPassword;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
@@ -104,13 +105,21 @@ Route::middleware('check.auth')->group(function () {
         });
     });
 
-    Route::prefix('job')->group(function () {
+    Route::prefix('Job')->group(function () {
         Route::get('/', [JobController::class, 'index'])->name('job.index');
         Route::post('/store', [JobController::class, 'store'])->name('job.store');
-        Route::get('/show/{id}', [JobController::class, 'show'])->name('job.show');
+        Route::get('/show', [JobController::class, 'show'])->name('job.show');
         Route::get('/edit', [JobController::class, 'edit'])->name('job.edit');
         Route::post('/update/{id}', [JobController::class, 'update'])->name('job.update');
-        Route::get('/delete', [JobController::class, 'destroy'])->name('job.delete');
+        Route::get('/delete/{id}', [JobController::class, 'destroy'])->name('job.delete');
+    });
+    Route::prefix('Candidate')->group(function () {
+        Route::get('/', [CandidateController::class, 'index'])->name('candidate.index');
+        Route::post('/store', [CandidateController::class, 'store'])->name('candidate.store');
+        Route::get('/show', [CandidateController::class, 'show'])->name('candidate.show');
+        Route::get('/edit', [CandidateController::class, 'edit'])->name('candidate.edit');
+        Route::post('/update/{id}', [CandidateController::class, 'update'])->name('candidate.update');
+        Route::get('/delete/{id}', [CandidateController::class, 'destroy'])->name('candidate.delete');
     });
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

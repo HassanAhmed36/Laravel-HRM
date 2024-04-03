@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $jobs = Job::all();
@@ -24,7 +22,6 @@ class JobController extends Controller
             'location' => 'required',
             'salary' => 'required',
             'positions_available' => 'required',
-            'is_active' => 'required',
         ]);
         try {
             Job::create([
@@ -44,32 +41,57 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        try {
+            $job = Job::find($request->id);
+            return view('partials.modals.show-job-modal', compact('job'))->render();
+        } catch (\Throwable $th) {
+            return response()->json('record not found!');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Job $job)
+    public function edit(Request $request)
     {
-        //
+        try {
+            $job = Job::find($request->id);
+            return view('partials.modals.job-edit-model', compact('job'))->render();
+        } catch (\Throwable $th) {
+            return response()->json('record not found!');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Job $job)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'salary' => 'required',
+            'positions_available' => 'required',
+        ]);
+        try {
+            Job::find($id)->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'location' => $request->location,
+                'salary' => $request->salary,
+                'positions_available' => $request->positions_available,
+                'is_active' => $request->has('is_active') ? true : false,
+            ]);
+            return back()->with('success', 'Job updated successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Job updated Failed!');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Job $job)
+    public function destroy($id)
     {
-        //
+        try {
+            Job::find($id)->delete();
+            return back()->with('success', 'Job Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Job Deleted Failed!');
+        }
     }
 }
