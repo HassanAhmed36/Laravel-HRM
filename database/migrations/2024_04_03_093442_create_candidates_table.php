@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('resume_path')->nullable();
             $table->integer('status')->default(1);
-            $table->foreignId('job_id')->nullable()->constrained('jobs', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 @extends('Layout.master')
 @section('main_section')
+
     <div class="row">
         <div class="col-12">
             <div class="card">

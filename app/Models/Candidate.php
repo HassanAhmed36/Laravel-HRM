@@ -16,11 +16,7 @@ class Candidate extends Model
         'address',
         'resume_path',
         'status',
-        'job_id',
     ];
 
-    public function job(): BelongsTo
-    {
-        return $this->belongsTo(Job::class, 'job_id');
-    }
+   
 }

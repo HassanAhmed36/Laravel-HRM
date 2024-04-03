@@ -57,12 +57,7 @@
                         <span key="t-projects">PaySlip</span>
                     </a>
                 </li>
-                <li class="mb-2">
-                    <a href="{{ route('job.index') }}" class="waves-effect">
-                        <i class="bx bx-briefcase"></i>
-                        <span key="t-tasks">Jobs</span>
-                    </a>
-                </li>
+
                 <li class="mb-2">
                     <a href="{{ route('candidate.index') }}" class="waves-effect">
                         <i class="bx bx-user"></i>
@@ -70,7 +65,7 @@
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a href="{{ route('interview.schedule.index') }}" class="waves-effect">
                         <i class="bx bx-calendar-check"></i>
                         <span key="t-blog">Interview Schedules</span>
                     </a>

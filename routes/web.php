@@ -11,6 +11,7 @@ use App\Http\Controllers\DeductionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveQuotaController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
 use App\Models\Designation;
+use App\Models\InterviewSchedule;
 use App\Services\AttendanceService;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Route;
@@ -105,14 +107,6 @@ Route::middleware('check.auth')->group(function () {
         });
     });
 
-    Route::prefix('Job')->group(function () {
-        Route::get('/', [JobController::class, 'index'])->name('job.index');
-        Route::post('/store', [JobController::class, 'store'])->name('job.store');
-        Route::get('/show', [JobController::class, 'show'])->name('job.show');
-        Route::get('/edit', [JobController::class, 'edit'])->name('job.edit');
-        Route::post('/update/{id}', [JobController::class, 'update'])->name('job.update');
-        Route::get('/delete/{id}', [JobController::class, 'destroy'])->name('job.delete');
-    });
     Route::prefix('Candidate')->group(function () {
         Route::get('/', [CandidateController::class, 'index'])->name('candidate.index');
         Route::post('/store', [CandidateController::class, 'store'])->name('candidate.store');
@@ -121,6 +115,15 @@ Route::middleware('check.auth')->group(function () {
         Route::post('/update/{id}', [CandidateController::class, 'update'])->name('candidate.update');
         Route::get('/delete/{id}', [CandidateController::class, 'destroy'])->name('candidate.delete');
     });
+
+    Route::prefix('interview-schedule')->group(function () {
+        Route::get('/', [InterviewScheduleController::class, 'index'])->name('interview.schedule.index');
+        Route::post('/store', [InterviewScheduleController::class, 'store'])->name('interview.schedule.store');
+        Route::get('/edit', [InterviewScheduleController::class, 'edit'])->name('interview.schedule.edit');
+        Route::get('/update/{id}', [InterviewScheduleController::class, 'update'])->name('interview.schedule.update');
+        Route::get('/delete/{id}', [InterviewScheduleController::class, 'destroy'])->name('interview.schedule.destroy');
+    });
+
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
