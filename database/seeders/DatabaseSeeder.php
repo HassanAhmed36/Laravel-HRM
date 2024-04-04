@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Candidate;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\EmployeeBasicInfo;
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(AttendanceSeeder::class);
         $this->call(DeductionSeeder::class);
         // $this->call(JobSeeder::class);
+        $this->call(CandidateSeeder::class);
     }
 }

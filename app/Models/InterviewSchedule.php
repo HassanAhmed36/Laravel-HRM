@@ -21,4 +21,8 @@ class InterviewSchedule extends Model
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
+    public function interviewer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'interviewer_id');
+    }
 }

@@ -41,7 +41,6 @@ class CandidateController extends Controller
                 "email" => $request->email,
                 "phone" => $request->phone,
                 "status" => $request->status,
-                "job_id" => $request->job_id,
                 "address" => $request->address,
                 "resume_path" => $path,
             ]);
@@ -87,7 +86,6 @@ class CandidateController extends Controller
                 "email" => $request->email,
                 "phone" => $request->phone,
                 "status" => $request->status,
-                "job_id" => $request->job_id,
                 "address" => $request->address,
             ]);
             if ($request->hasFile('resume_path')) {
@@ -100,11 +98,6 @@ class CandidateController extends Controller
             return redirect()->back()->with('error', 'Candidate Update Failed!');
         }
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         try {

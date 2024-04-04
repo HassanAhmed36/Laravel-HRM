@@ -191,4 +191,106 @@
             </div>
         </div>
     </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Notice Board</h4>
+                <hr>
+                <br>
+                <div data-simplebar="init" style="min-height: 90px; max-height:340px" class="simplebar-scrollable-y">
+                    <div class="simplebar-wrapper" style="margin: 0px;">
+                        <div class="simplebar-height-auto-observer-wrapper">
+                            <div class="simplebar-height-auto-observer"></div>
+                        </div>
+                        <div class="simplebar-mask">
+                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                    aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
+                                    <div class="simplebar-content" style="padding: 0px;">
+                                        <div class="vstack d-flex align-items-start ">
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                    <p class="pt-3">9 Dec</p>
+                                                </span>
+                                                <div class="ms-2 flex-grow-1">
+                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                            class="text-body">Marketing Director</a></h6>
+                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
+                                                </div>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simplebar-placeholder" style="width: 372px; height: 520px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                        <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                        <div class="simplebar-scrollbar"
+                            style="height: 271px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end card-->
+    </div>
 @endsection

@@ -8,7 +8,6 @@
             </div>
         @endforeach
     @endif
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -39,32 +38,33 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $interview->candidate->name }}</td>
-                                    <td>{{ $interview->candidate->email }}</td>
-                                    <td>{{ $interview->candidate->phone }}</td>
+                                    <td>{{ $interview->interview_datetime }}</td>
+
                                     <td>
-                                        @if ($interview->status == 'scheduled')
-                                            <span class="badge badge-pill badge-soft-info">In Progress</span>
-                                        @elseif ($interview->status == 'completed')
-                                            <span class="badge badge-pill badge-soft-success">Selected</span>
-                                        @elseif ($interview->status == 'rejected')
-                                            <span class="badge badge-pill badge-soft-danger">Rejected</span>
-                                        @elseif ($interview->status == 'on_hold')
-                                            <span class="badge badge-pill badge-soft-warning">On Hold</span>
+                                        @if ($interview->interview_type == 1)
+                                            <span class="badge badge-pill badge-soft-info fs-6">Onsite</span>
+                                        @else
+                                            <span class="badge badge-pill badge-soft-warning fs-6">Online</span>
                                         @endif
                                     </td>
                                     <td>
+                                        @if ($interview->status == 1)
+                                            <span class="badge badge-pill badge-soft-info fs-6">Scheduled</span>
+                                        @elseif ($interview->status == 2)
+                                            <span class="badge badge-pill badge-soft-success fs-6">Completed</span>
+                                        @elseif ($interview->status == 3)
+                                            <span class="badge badge-pill badge-soft-warning fs-6">On hold</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $interview->interviewer->name }}</td>
+                                    <td>
                                         <button data-id="{{ $interview->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
-                                            <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-edit"></i>
                                         </button>
-                                        <form action="{{ route('interview-schedule.destroy', ['id' => $interview->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm mr-2"
-                                                onclick="return confirm('Are you sure you want to delete this interview schedule?')">
-                                                <i class="fa fa-trash"></i> Delete
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('interview.schedule.destroy', ['id' => $interview->id]) }}""
+                                            class="btn btn-danger btn-sm mr-2 ">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -77,24 +77,91 @@
 
     <!-- Add Interview Modal -->
     <div id="add-interview" class="modal fade" tabindex="-1" aria-labelledby="add-interview-label" aria-hidden="true">
-        {{-- @include('partials.modals.add-interview') --}}
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form action="{{ route('interview.schedule.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Scheduled Inteview</h5>
+                        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label">Candidate</label>
+                                    <select name="candidate_id" class="form-select">
+                                        <option disabled selected>Select Candidate</option>
+                                        @foreach ($candidates as $candidate)
+                                            <option value="{{ $candidate->id }}">{{ $candidate->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-3">
+                                <div class="form-group">
+                                    <label class="form-label">Schedule Time</label>
+                                    <input type="datetime-local" class="form-control" placeholder="Add Amount"
+                                        name="interview_datetime">
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-3">
+                                <div class="form-group">
+                                    <label class="form-label">Interview Type</label>
+                                    <select name="interview_type" class="form-select">
+                                        <option value="1" selected>OnSite</option>
+                                        <option value="2">Online</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-3">
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" name="status">
+                                        <option value="1" selected>Scheduled</option>
+                                        <option value="2">Complete</option>
+                                        <option value="3">On Hold</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-3">
+                                <div class="form-group">
+                                    <label class="form-label">Interviewer</label>
+                                    <select class="form-select" name="interviewer_id">
+                                        @foreach ($interviewers as $interviewer)
+                                            <option value="{{ $interviewer->id }}">{{ $interviewer->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-block">Scheduled Interview</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
 
     <!-- Edit Interview Modal -->
     <div id="edit-interview" class="modal fade" tabindex="-1" aria-labelledby="edit-interview-label" aria-hidden="true">
-        {{-- @include('partials.modals.edit-interview') --}}
+        @include('partials.modals.edit-interview')
     </div>
-@endsection
-
-@section('scripts')
     <script>
         $('.edit-btn').click(function(e) {
             e.preventDefault();
             var interviewId = $(this).data('id');
-            var url = "{{ route('interview.schedule.edit', ':id') }}".replace(':id', interviewId);
+            var url = "{{ route('interview.schedule.edit') }}";
             $.ajax({
                 url: url,
                 method: "GET",
+                data: {
+                    id: interviewId
+                },
                 success: function(response) {
                     $('#edit-interview').html(response);
                     $('#edit-interview').modal('show');

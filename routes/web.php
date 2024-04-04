@@ -120,7 +120,7 @@ Route::middleware('check.auth')->group(function () {
         Route::get('/', [InterviewScheduleController::class, 'index'])->name('interview.schedule.index');
         Route::post('/store', [InterviewScheduleController::class, 'store'])->name('interview.schedule.store');
         Route::get('/edit', [InterviewScheduleController::class, 'edit'])->name('interview.schedule.edit');
-        Route::get('/update/{id}', [InterviewScheduleController::class, 'update'])->name('interview.schedule.update');
+        Route::post('/update/{id}', [InterviewScheduleController::class, 'update'])->name('interview.schedule.update');
         Route::get('/delete/{id}', [InterviewScheduleController::class, 'destroy'])->name('interview.schedule.destroy');
     });
 
