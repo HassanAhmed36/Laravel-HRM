@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
@@ -25,7 +26,7 @@ class CandidateController extends Controller
     {
         $request->validate([
             "name" => "required|string",
-            "email" => "required",
+            "email" => "required|unique:candidates,email",
             "phone" => "required",
             "status" => "required|integer",
             "address" => "nullable",
@@ -33,8 +34,10 @@ class CandidateController extends Controller
         ]);
 
         try {
-            if ($request->has('resume_path')) {
-                $path = $request->file('resume_path')->store('candidate_resume');
+            if ($request->hasFile('resume_path')) {
+                $name = uniqid() . '.' . $request->resume_path->getClientOriginalName();
+                $request->resume_path->move(public_path('candidate-resume/'), $name);
+                $path = 'candidate-resume/' . $name;
             }
             Candidate::create([
                 "name" => $request->name,
@@ -72,7 +75,7 @@ class CandidateController extends Controller
     {
         $request->validate([
             "name" => "required|string",
-            "email" => "required",
+            "email" => "required|unique:candidates,id,except," . $id,
             "phone" => "required",
             "status" => "required|integer",
             "address" => "nullable",

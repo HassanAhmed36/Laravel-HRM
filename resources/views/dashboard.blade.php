@@ -191,106 +191,105 @@
             </div>
         </div>
     </div>
-
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title mb-4">Notice Board</h4>
-                <hr>
-                <br>
-                <div data-simplebar="init" style="min-height: 90px; max-height:340px" class="simplebar-scrollable-y">
-                    <div class="simplebar-wrapper" style="margin: 0px;">
-                        <div class="simplebar-height-auto-observer-wrapper">
-                            <div class="simplebar-height-auto-observer"></div>
-                        </div>
-                        <div class="simplebar-mask">
-                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                <div class="simplebar-content-wrapper" tabindex="0" role="region"
-                                    aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
-                                    <div class="simplebar-content" style="padding: 0px;">
-                                        <div class="vstack d-flex align-items-start ">
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <span class="badge badge-pill badge-soft-warning fs-3 fw-semibold d-flex justify-content-center align-items-center rounded-3">
-                                                    <p class="pt-3">9 Dec</p>
-                                                </span>
-                                                <div class="ms-2 flex-grow-1">
-                                                    <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
-                                                            class="text-body">Marketing Director</a></h6>
-                                                    <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur.</b>view more</p>
-                                                </div>
-                                              
+    @if (count($notices) > 0)
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Notice Board</h4>
+                    <hr>
+                    <br>
+                    <div data-simplebar="init" style="min-height: 90px !important; max-height:340px"
+                        class="simplebar-scrollable-y">
+                        <div class="simplebar-wrapper" style="margin: 0px;">
+                            <div class="simplebar-height-auto-observer-wrapper">
+                                <div class="simplebar-height-auto-observer"></div>
+                            </div>
+                            <div class="simplebar-mask">
+                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                    <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                        aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
+                                        <div class="simplebar-content" style="padding: 0px;">
+                                            <div class="vstack d-flex align-items-start ">
+                                                @foreach ($notices as $notice)
+                                                    <div class="d-flex mb-3">
+                                                        <span
+                                                            class="{{ $notice->status }} font-size-14 fw-semibold d-flex justify-content-center align-items-center rounded-3">
+                                                            <p class="pt-3">
+                                                                {{ \Carbon\Carbon::parse($notice->date)->format('d M') }}
+                                                            </p>
+                                                        </span>
+                                                        <div class="ms-2 flex-grow-1 mt-1">
+                                                            <h6 class="mb-1 font-size-15 mt-1"><a href="job-details.html"
+                                                                    class="text-body">{{ $notice->title }}</a></h6>
+                                                            <p class="text-muted mb-0">
+                                                                {{ Str::words($notice->description, 5, '..') }}. <a
+                                                                    href="#" class="view-more-link view-more"
+                                                                    data-id="{{ $notice->id }}">View
+                                                                    more</a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="simplebar-placeholder" style="width: 372px; height: 520px;"></div>
                         </div>
-                        <div class="simplebar-placeholder" style="width: 372px; height: 520px;"></div>
-                    </div>
-                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                        <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
-                    </div>
-                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                        <div class="simplebar-scrollbar"
-                            style="height: 271px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                            <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                        </div>
+                        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                            <div class="simplebar-scrollbar"
+                                style="height: 271px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                        </div>
                     </div>
                 </div>
+            </div><!--end card-->
+        </div>
+    @endif
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Notice</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="description-box">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-        </div><!--end card-->
+        </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.view-more').click(function() {
+                var id = $(this).data('id');
+                var url = "{{ route('get.notice.board.data') }}";
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#description-box').html(response.description);
+                        $('#exampleModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+
 @endsection

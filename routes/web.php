@@ -15,6 +15,7 @@ use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveQuotaController;
+use App\Http\Controllers\NoticeBoardController;
 use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
@@ -123,7 +124,14 @@ Route::middleware('check.auth')->group(function () {
         Route::post('/update/{id}', [InterviewScheduleController::class, 'update'])->name('interview.schedule.update');
         Route::get('/delete/{id}', [InterviewScheduleController::class, 'destroy'])->name('interview.schedule.destroy');
     });
-
+    Route::prefix('Notice-board')->group(function () {
+        Route::get('/', [NoticeBoardController::class, 'index'])->name('notice.board.index');
+        Route::post('/store', [NoticeBoardController::class, 'store'])->name('notice.board.store');
+        Route::get('/edit', [NoticeBoardController::class, 'edit'])->name('notice.board.edit');
+        Route::get('/update', [NoticeBoardController::class, 'update'])->name('notice.board.update');
+        Route::get('/delete/{id}', [NoticeBoardController::class, 'destroy'])->name('notice.board.delete');
+        Route::get('/get-data', [NoticeBoardController::class, 'getData'])->name('get.notice.board.data');
+    });
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

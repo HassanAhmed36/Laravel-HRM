@@ -5,16 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NoticeBoard extends Model
+class Permission extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        "title",
-        "status",
-        "date",
-        "description",
-    ];
-
- 
+    protected $fillable = ['name'];
 }

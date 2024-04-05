@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="javascript: void(0);" class="waves-effect ">
+                    <a href="{{ route('notice.board.index') }}" class="waves-effect ">
                         <i class="bx bx-notification"></i>
                         <span key="t-jobs">Notice Board</span>
                     </a>

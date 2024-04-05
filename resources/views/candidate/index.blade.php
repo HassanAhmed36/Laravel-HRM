@@ -55,10 +55,12 @@
                                         <button data-id="{{ $candidate->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
                                             <i class="fa fa-edit"></i>
                                         </button>
-
                                         <a href="{{ route('candidate.delete', ['id' => $candidate->id]) }}"
                                             class="btn btn-danger btn-sm mr-2">
                                             <i class="fa fa-trash"></i>
+                                        </a>
+                                        <a href="{{ asset($candidate->resume_path) }}" class="btn btn-success btn-sm mr-2" download="">
+                                            <i class="fa fa-download"></i> Download
                                         </a>
                                     </td>
                                 </tr>

@@ -62,7 +62,7 @@
     </div>
     <div>
         <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">Add New Designation</h5>
@@ -92,6 +92,142 @@
                                     <label class="form-check-label" for="SwitchCheckSizemd">is active</label>
                                 </div>
                             </div>
+                            <div class="col-12 mt-4 pt-2">
+                                <h4>Permissions</h4>
+                                <br>
+                                <table class="table table-bordered ">
+                                    <tr>
+                                        <th>Entity</th>
+                                        <th>View</th>
+                                        <th>Create</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Employee</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Department</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Designation</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attendance</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leaves</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leave Quota</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Holiday</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Allowance</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payslip</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Candidate</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Interview Scheduled</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notice Board</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Settings</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Attendance</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>My Payslip</td>
+                                        <td><input class="form-check-input" type="checkbox" value="" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
 
                         </div>
                         <div class="modal-footer">

@@ -12,54 +12,91 @@ class NoticeBoardController extends Controller
      */
     public function index()
     {
-        //
+        $notices = NoticeBoard::all();
+        return view('notice-board.index', compact('notices'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "title" => "required",
+            "status" => "required",
+            "date" => "required",
+            "description" => "required",
+        ]);
+
+        try {
+            NoticeBoard::create([
+                "title" => $request->title,
+                "status" => $request->status,
+                "date" => $request->date,
+                "description" => $request->description,
+            ]);
+            return back()->with('success', 'NoticeBoard Added Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'NoticeBoard Added Failed!');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(NoticeBoard $noticeBoard)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(NoticeBoard $noticeBoard)
+    public function edit(Request $request)
     {
-        //
+        try {
+            $notice = NoticeBoard::find($request->id);
+            return view('partials.modals.notice-board-edit', compact('notice'))->render();
+        } catch (\Throwable $th) {
+            return response()->json('error', 'record not found');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, NoticeBoard $noticeBoard)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "title" => "required",
+            "status" => "required",
+            "date" => "required",
+            "description" => "required",
+        ]);
+
+        try {
+            NoticeBoard::create([
+                "title" => $request->title,
+                "status" => $request->status,
+                "date" => $request->date,
+                "description" => $request->description,
+            ]);
+            return back()->with('success', 'NoticeBoard Updated Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'NoticeBoard Updated Failed!');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(NoticeBoard $noticeBoard)
+    public function destroy($id)
     {
-        //
+        try {
+            NoticeBoard::find($id)->delete();
+            return back()->with('success', 'NoticeBoard Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'NoticeBoard Deleted Failed!');
+        }
+    }
+
+    public function getData(Request $request)
+    {
+        try {
+            return response()->json(NoticeBoard::find($request->id));
+        } catch (\Throwable $th) {
+            return response()->json('error', 'record not found');
+        }
     }
 }

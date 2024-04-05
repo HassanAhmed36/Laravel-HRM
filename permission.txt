@@ -1,0 +1,17 @@
+| Entity              | View   | Create | Update | Delete | Details |
+|---------------------|--------|--------|--------|--------|---------|
+| Employee            | ☑️     | ☑️     | ☑️     |        | ☑️      |
+| Department          | ☑️     | ☑️     | ☑️     |        |         |
+| Designation         | ☑️     | ☑️     | ☑️     |        |         |
+| Attendance          | ☑️     |        | ☑️     |        |         |
+| Leaves              | ☑️     |        |        |        |         |
+| Leave Quota         | ☑️     |        |        |        |         |
+| Holiday             | ☑️     | ☑️     | ☑️     |        | ☑️     |
+| Allowance           | ☑️     | ☑️     |        | ☑️    |         |
+| Payslip             | ☑️     |        |        |        |         |
+| Candidate           | ☑️     | ☑️     | ☑️     | ☑️    |         |
+| Interview Scheduled | ☑️     | ☑️     | ☑️     | ☑️    |         |
+| Notice Board        | ☑️     | ☑️     | ☑️     | ☑️    |         |
+| Settings            | ☑️     |        |        |        |         |
+| My Attendance       | ☑️     |        |        |        |         |
+| My Payslip          | ☑️     |        |        |        |         |

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\NoticeBoard;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\TestStatus\Notice;
 
 class AuthController extends Controller
 {
@@ -42,7 +45,8 @@ class AuthController extends Controller
     }
     public function dashboard()
     {
-        $attendance = Attendance::where('user_id' , Auth::user()->id)->latest()->first();
-        return view('dashboard' , compact('attendance'));
+        $attendance = Attendance::where('user_id', Auth::user()->id)->latest()->first();
+        $notices = NoticeBoard::whereDate('date', Carbon::today())->get();
+        return view('dashboard', compact('attendance', 'notices'));
     }
 }
