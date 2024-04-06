@@ -12,8 +12,10 @@
                                 <button class="btn btn-primary">Filter</button>
                             </form>
                             <div>
+                                @can('permission' , 'leave_view')
                                 <button class="btn btn-primary" id="mark-leave" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">Mark Leave</button>
+                                    @endcan
                             </div>
                         </div>
                     </div>
@@ -44,11 +46,14 @@
                                     <td>
                                         {{ $leave->reason }}
                                     </td>
+                                    
                                     <td>
+                                        @can('permission', 'leave_delete')
                                         <a class="btn btn-outline-danger btn-sm edit-btn"
                                             href="{{ route('delete.leave', ['id' => $leave->id]) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                         @endcan
                                     </td>
                                 </tr>
                             @endforeach

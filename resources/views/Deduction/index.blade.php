@@ -34,10 +34,12 @@
                                     <td>{{ $deduction->name }}</td>
                                     <td>{{ $deduction->deduct_amount }}</td>
                                     <td>
+                                        @can('permission' , 'deduction_update') 
                                         <button class="btn btn-primary btn-sm edit-deduction" data-id="{{ $deduction->id }}"
                                           >
                                             <i class="fa fa-edit"></i>
                                         </button>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

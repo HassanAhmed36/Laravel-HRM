@@ -15,8 +15,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Allowances</h3>
                         <div>
+                            @can('permission' , 'allowance_create')     
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> Add Allowance</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -41,10 +43,12 @@
                                     <td>{{ $allowance->month }}</td>
                                     <td>{{ $allowance->user->name }}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-danger"
-                                            href="{{ route('allowance.delete', ['id' => $allowance->id]) }}">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                    @can('permission' , 'allowance_delete')           
+                                       <a class="btn btn-sm btn-danger"
+                                           href="{{ route('allowance.delete', ['id' => $allowance->id]) }}">
+                                           <i class="fa fa-trash"></i>
+                                       </a>
+                                    @endcan
                                     </td>
                                 </tr>
                             @endforeach

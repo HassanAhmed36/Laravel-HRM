@@ -1,6 +1,5 @@
 @extends('Layout.master')
 @section('main_section')
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -42,10 +41,12 @@
                                         {{ App\Helpers\CustomHelper::getAttendanceStatus($attendance->status) }}
                                     </td>
                                     <td>
+                                        @can('permission' , 'attendance_update')    
                                         <button class="btn btn-outline-primary btn-sm edit-btn"
                                             data-id="{{ $attendance->id }}">
                                             <i class="fa fa-edit"></i>
                                         </button>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

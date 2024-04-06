@@ -15,8 +15,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Schedule Interview</h3>
                         <div>
+                            @can('permission' , 'interview_schedule_create')
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#add-interview"><i class="fa fa-plus-circle me-2"></i>Schedule now</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -58,13 +60,17 @@
                                     </td>
                                     <td>{{ $interview->interviewer->name }}</td>
                                     <td>
+                                         @can('permission' , 'interview_schedule_update')
                                         <button data-id="{{ $interview->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
                                             <i class="fa fa-edit"></i>
                                         </button>
-                                        <a href="{{ route('interview.schedule.destroy', ['id' => $interview->id]) }}""
+                                        @endcan
+                                         @can('permission' , 'interview_schedule_delete')
+                                         <a href="{{ route('interview.schedule.destroy', ['id' => $interview->id]) }}"
                                             class="btn btn-danger btn-sm mr-2 ">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

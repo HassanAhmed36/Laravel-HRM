@@ -77,4 +77,9 @@ class PayslipController extends Controller
         $pdf->render();
         return $pdf->stream('payslip.pdf');
     }
+
+    public function myPayslip()
+    {
+        return view('Payslip.my-payslip');
+    }
 }

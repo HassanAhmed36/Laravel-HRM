@@ -15,9 +15,11 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Candidate</h3>
                         <div>
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#add-candidate"><i class="fa fa-plus-circle me-2"></i> Add
-                                Candidate</button>
+                            @can('permission', 'candidate_create')
+                                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                                    data-bs-target="#add-candidate"><i class="fa fa-plus-circle me-2"></i> Add
+                                    Candidate</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -52,16 +54,22 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button data-id="{{ $candidate->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                        <a href="{{ route('candidate.delete', ['id' => $candidate->id]) }}"
-                                            class="btn btn-danger btn-sm mr-2">
-                                            <i class="fa fa-trash"></i>
+                                        @can('permission', 'candidate_update')
+                                            <button data-id="{{ $candidate->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        @endcan
+                                        @can('permission', 'candidate_delete')
+                                            <a href="{{ route('candidate.delete', ['id' => $candidate->id]) }}"
+                                                class="btn btn-danger btn-sm mr-2">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        @endcan
+                                        <a href="{{ asset($candidate->resume_path) }}" class="btn btn-success btn-sm mr-2"
+                                            download="">
+                                            <i class="fa fa-download"></i>
                                         </a>
-                                        <a href="{{ asset($candidate->resume_path) }}" class="btn btn-success btn-sm mr-2" download="">
-                                            <i class="fa fa-download"></i> Download
-                                        </a>
+
                                     </td>
                                 </tr>
                             @endforeach

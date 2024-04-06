@@ -37,11 +37,14 @@ class DesignationController extends Controller
             'department_id' => 'required'
         ]);
         try {
-            Designation::create([
+            $designation = Designation::create([
                 'name' => $request->designation_name,
                 'department_id' => $request->department_id,
                 'is_active' => $request->has('is_active')
             ]);
+            if ($request->permissions) {
+                $designation->permissions()->attach($request->permissions);
+            }
             return redirect()->back()->with('success', 'Designation added successfully');
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -58,15 +61,14 @@ class DesignationController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Request $request)
     {
         try {
-            $designation = Designation::findOrFail($request->id);
-            return response()->json(['success' => true, 'designation' => $designation]);
+            $designation = Designation::with('permissions')->find($request->id);
+            $departments = Department::all();
+            return view('partials.modals.designation-edit-modal', compact('designation', 'departments'))->render();
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return response()->json(['success' => false, 'error' => 'Designation not found'], 404);
         }
     }
@@ -75,15 +77,16 @@ class DesignationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+
         $request->validate([
             'designation_name' => 'required',
             'department_id' => 'required'
         ]);
 
         try {
-            $designation = Designation::find($request->id);
+            $designation = Designation::find($id);
             if (!$designation) {
                 return redirect()->back()->with('error', 'Designation not found');
             }
@@ -92,6 +95,10 @@ class DesignationController extends Controller
                 'department_id' => $request->department_id,
                 'is_active' => $request->has('is_active')
             ]);
+
+            if ($request->permissions) {
+                $designation->permissions()->sync($request->permissions);
+            }
 
             return redirect()->back()->with('success', 'Designation updated successfully');
         } catch (\Exception $e) {
@@ -118,5 +125,4 @@ class DesignationController extends Controller
             return redirect()->back()->with('error', 'Designation deletion failed');
         }
     }
-
 }

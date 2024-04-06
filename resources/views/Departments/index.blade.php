@@ -7,8 +7,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">All Departments</h3>
                         <div>
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> new Department</button>
+                            @can('permission', 'department_create')
+                                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                                    data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> new Department</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -35,20 +37,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="dropdown d-inline-block">
-                                            <div style="cursor: pointer !important" data-bs-toggle="dropdown"
-                                                aria-expanded="true">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </div>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item edit-department" href="#"
-                                                        data-id="{{ $department->id }}">Edit</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('department.delete', ['id' => $department->id]) }}">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
+                                          <a class="btn btn-primary btn-sm edit-department" href="#"
+                                                        data-id="{{ $department->id }}">
+                                                      <i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-sm"
+                                                        href="{{ route('department.delete', ['id' => $department->id]) }}">
+                                                    <i class="fa fa-trash"></i></a>
+                                                    </a>
                                     </td>
                                 </tr>
                             @endforeach

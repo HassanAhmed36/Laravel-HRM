@@ -7,8 +7,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">All Employee</h3>
                         <div>
+                            @can('permission' , 'employee_create')     
                             <a href="{{ route('employee.create') }}" class="btn btn-primary"><i
                                     class="fa fa-plus-circle me-2"></i>Add new Employee</a>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -38,14 +40,18 @@
                                         </span>
                                     </td>
                                     <td>
+                                        @can('permission' , 'employee_update')     
                                         <a href="{{ route('employee.edit', ['id' => $User->id]) }}"
                                             class="btn btn-outline-info btn-sm edit" title="Edit">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
+                                        @endcan
+                                         @can('permission' , 'employee_delete')     
                                         <a href="{{ route('employee.delete', ['id' => $User->id]) }}"
                                             class="btn btn-outline-danger btn-sm edit" title="Delete">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

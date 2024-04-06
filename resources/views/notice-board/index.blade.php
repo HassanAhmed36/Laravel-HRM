@@ -15,9 +15,11 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Notice Board</h3>
                         <div>
+                            @can('permissionn' , 'notice_board_create')
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#add-candidate"><i class="fa fa-plus-circle me-2"></i> Add Notice
                                 Board</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -46,13 +48,18 @@
                                         {{ \Carbon\Carbon::parse($notice->date)->format('M d, Y') }}
                                     </td>
                                     <td>
+                                        @can('permission' , 'notice_board_update')
                                         <button data-id="{{ $notice->id }}" class="btn btn-primary btn-sm mr-2 edit-btn">
                                             <i class="fa fa-edit"></i>
                                         </button>
+                                        @endcan
+
+                                         @can('permission' , 'notice_board_delete')
                                         <a href="{{ route('notice.board.delete', ['id' => $notice->id]) }}"
                                             class="btn btn-danger btn-sm mr-2">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

@@ -48,7 +48,6 @@ class AttendanceService
         } catch (\Exception $e) {
             return back()->with('error', 'Attendance not  mark !');
         }
-    }
-   
+    }   
 
 }

@@ -7,8 +7,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Holidays</h3>
                         <div>
+                            @can('permission' , 'holiday_create')
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#myModal"><i class="fa fa-plus-circle me-2"></i> Add Holidays</button>
+                            @endcan
                         </div>
                     </div>
                     <hr>
@@ -29,20 +31,13 @@
                                     <td>{{ $holiday->name }}</td>
                                     <td>{{ date('j, M Y', strtotime($holiday->date)) }}</td>
                                     <td>
-                                        <div class="dropdown d-inline-block">
-                                            <div style="cursor: pointer !important" data-bs-toggle="dropdown"
-                                                aria-expanded="true">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </div>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item edit-holiday" href="#"
-                                                        data-id="{{ $holiday->id }}">Edit</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('holiday.delete', ['id' => $holiday->id]) }}">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                       <a class="btn btn-primary btn-sm edit-holiday" href="#"
+                                                        data-id="{{ $holiday->id }}"><i class="fa fa-edit">
 
+                                                        </a>
+                                               <a class="btn btn-danger btn-sm"
+                                                        href="{{ route('holiday.delete', ['id' => $holiday->id]) }}"><i class="fa fa-trash">
+                                                            </a>  
                                     </td>
                                 </tr>
                             @endforeach
