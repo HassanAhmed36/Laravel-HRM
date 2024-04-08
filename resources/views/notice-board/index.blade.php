@@ -15,7 +15,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title fs-4 fw-semibold">Notice Board</h3>
                         <div>
-                            @can('permissionn' , 'notice_board_create')
+                            @can('permission' , 'notice_board_create')
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#add-candidate"><i class="fa fa-plus-circle me-2"></i> Add Notice
                                 Board</button>

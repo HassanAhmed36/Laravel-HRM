@@ -2,6 +2,11 @@
 
 namespace App\Helpers;
 
+use App\Events\NotificationSent;
+use App\Models\User;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Auth;
+
 class CustomHelper
 {
     public static function getAttendanceStatus($status)
@@ -27,6 +32,18 @@ class CustomHelper
                 return 'Annual';
             case 10:
                 return 'Holiday';
+        }
+    }
+
+
+    public static function SendNotification($users, $type, $message)
+    {
+        foreach ($users as $user) {
+            $user->notify(new NewNotification([
+                'type' => $type,
+                'message' => $message
+            ]));
+            // event(new NotificationSent($user));
         }
     }
 }

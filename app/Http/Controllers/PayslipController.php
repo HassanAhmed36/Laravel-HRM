@@ -20,6 +20,12 @@ class PayslipController extends Controller
 
     public function downloadPaySlip(Request $request)
     {
+
+        $request->validate([
+            'month' => 'required',
+            'user_id' => 'required'
+        ]);
+
         if ($request->month === Carbon::now()->format('Y-m')) {
             return back()->with('error', 'Payslip for the current month will be generated after the month ends.');
         }

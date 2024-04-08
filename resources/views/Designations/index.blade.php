@@ -1,5 +1,13 @@
 @extends('Layout.master')
 @section('main_section')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -37,15 +45,15 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @can('permission' , 'designation_update')
-                                        <a class="btn btn-primary btn-sm edit-designation" href="#"
-                                            data-id="{{ $designation->id }}"><i class="fa fa-edit"></i></a>
+                                        @can('permission', 'designation_update')
+                                            <a class="btn btn-primary btn-sm edit-designation" href="#"
+                                                data-id="{{ $designation->id }}"><i class="fa fa-edit"></i></a>
                                         @endcan
-                                        @can('permission' , 'designation_delete')
-                                        <a class="btn btn-danger btn-sm"
-                                            href="{{ route('designation.delete', ['id' => $designation->id]) }}">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        @can('permission', 'designation_delete')
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{{ route('designation.delete', ['id' => $designation->id]) }}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
                                         @endcan
                                     </td>
                                 </tr>
@@ -158,6 +166,15 @@
                                         <td><input name="permissions[]" class="form-check-input" type="checkbox"
                                                 value="43">
                                         </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>All Leaves Requests</td>
+                                        <td><input name="permissions[]" class="form-check-input" type="checkbox"
+                                                value="46"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>

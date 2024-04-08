@@ -1,5 +1,13 @@
 @extends('Layout.master')
 @section('main_section')
+ @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card">

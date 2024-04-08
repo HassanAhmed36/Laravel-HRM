@@ -42,9 +42,10 @@
                         </a>
                     </li>
                 @endcan
-                @can('permission', ['leave_view', 'leave_quota_view', 'holiday_view', 'deduction_setting_view'])
+                @can('permission', ['leave_view', 'leave_quota_view', 'holiday_view', 'deduction_setting_view',
+                    'all_leave_request'])
                     <li class="mb-2">
-                        <a class="waves-effecthas-arrow">
+                        <a class="waves-effecthas-arrow has-arrow">
                             <i class="bx bx-calendar"></i>
                             <span key="t-invoices">Leaves</span>
                         </a>
@@ -58,9 +59,9 @@
                             @can('permission', 'holiday_view')
                                 <li class="mb-2"><a href="{{ route('holiday.index') }}" key="t-p-list">Holiday</a></li>
                             @endcan
-                            @can('permission', 'deduction_setting_view')
-                                <li class="mb-2"><a href="{{ route('deduction.index') }}" key="t-p-overview">Deduction
-                                        Settings</a></li>
+                            @can('permission', 'all_leave_request')
+                                <li class="mb-2"><a href="{{ route('all.leave.request') }}" key="t-p-overview">All Leave
+                                        Requests</a></li>
                             @endcan
                         </ul>
                     </li>
@@ -137,7 +138,12 @@
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li class="mb-2"><a href="projects-grid.html" key="t-p-grid">Website Settings</a></li>
+                            @can('permission', 'deduction_setting_view')
+                                <li class="mb-2"><a href="{{ route('deduction.index') }}" key="t-p-overview">Deduction
+                                        Settings</a></li>
+                            @endcan
                         </ul>
+
                     </li>
                 @endcan
             </ul>

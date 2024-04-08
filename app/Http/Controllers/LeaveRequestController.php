@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
+use App\Models\Leave;
 use App\Models\LeaveQuota;
 use App\Models\LeaveRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LeaveRequestController extends Controller
 {
@@ -103,6 +107,95 @@ class LeaveRequestController extends Controller
             return back()->with('success', 'leave request successfully deleted!');
         } catch (\Throwable $th) {
             return back()->with('error', 'leave request deleted Failed!');
+        }
+    }
+
+    public function getAllLeaveRequest()
+    {
+        $requests = LeaveRequest::all();
+        return view('leave-request.all-request', compact('requests'));
+    }
+
+    public function leaveRequestApprove($id)
+    {
+        DB::beginTransaction();
+        try {
+            $LeaveRequest = LeaveRequest::find($id);
+            $leaveQuota = LeaveQuota::where('user_id', $LeaveRequest->user_id)->first();
+            if (!$leaveQuota) {
+                return back()->with('error', 'Leave quota not found for the user!');
+            }
+            $attendances = [];
+            $startDate = Carbon::parse($LeaveRequest->start_date);
+            $endDate = Carbon::parse($LeaveRequest->end_date);
+            $numberOfDays = $endDate->diffInDays($startDate) + 1;
+            if ($LeaveRequest->leave_type != 'unpaid_leave' && $leaveQuota->{$LeaveRequest->leave_type} < $numberOfDays) {
+                return back()->with('error', 'Marked leave exceeds available quota!');
+            }
+
+            for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+                switch ($LeaveRequest->leave_type) {
+                    case 'sick_leave':
+                        $leaveQuota->sick_leave--;
+                        break;
+                    case 'annual_leave':
+                        $leaveQuota->annual_leave--;
+                        break;
+                    case 'casual_leave':
+                        $leaveQuota->casual_leave--;
+                        break;
+                    default:
+                        $leaveQuota->unpaid_leave++;
+                        break;
+                }
+                if ($LeaveRequest->leave_type === "sick_leave") {
+                    $status = 7;
+                } elseif ($LeaveRequest->leave_type == "casual_leave") {
+                    $status = 8;
+                } elseif ($LeaveRequest->leave_type == "annual_leave") {
+                    $status = 9;
+                } elseif ($LeaveRequest->leave_type == "unpaid_leave") {
+                    $status = 6;
+                }
+                $attendances[] = [
+                    'user_id' => $LeaveRequest->user_id,
+                    'check_in' => null,
+                    'check_out' => null,
+                    'status' => $status,
+                    'created_at' => $date->toDateTimeString(),
+                ];
+
+                Leave::create([
+                    'date' => $date,
+                    'user_id' => $LeaveRequest->user_id,
+                    'reason' => $LeaveRequest->reason,
+                    'leave_type' => $status,
+                    'reason' => $LeaveRequest->description
+                ]);
+            }
+            Attendance::insert($attendances);
+            $leaveQuota->save();
+
+            LeaveRequest::find($id)->update([
+                'status' => 1
+            ]);
+            DB::commit();
+            return back()->with('success', 'Leave Approved successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return back()->with('error', 'Leave Approved successfully!');
+        }
+    }
+    public function leaveRequestReject($id)
+    {
+        try {
+            LeaveRequest::find($id)->update([
+                'status' => 0
+            ]);
+            return back()->with('success', 'Leave Request Rejected Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Leave Request Rejected Failed!');
         }
     }
 }

@@ -40,11 +40,21 @@
     </div>
     <div class="right-bar">
         <div data-simplebar class="h-100" style="background: white !important;">
-            @include('partials.notification')
+            <div class="">
+                <div class="py-2 d-flex justify-content-between align-items-center px-3"
+                    style="border-bottom: 2px solid lightgray ">
+                    <div>
+                        <h5 class="mt-3 ">Notifications</h5>
+                    </div>
+                    <button class="btn btn-light" id="close-btn">X</button>
+                </div>
+                <div id="notification-box">
+
+                </div>
+            </div>
         </div>
         <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
-        <div class="rightbar-overlay"></div>
-
+        <div class="bg-light shadow-lg"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
@@ -68,6 +78,52 @@
                 toastr.error("{{ session('error') }}");
             </script>
         @endsession
+        <script>
+            $(document).ready(function() {
+                function fetchNotifications() {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('get.notification') }}",
+                        success: function(response) {
+                            $('#notification-box').html(response);
+                        }
+                    });
+                }
+
+                $('#close-btn').click(function(e) {
+                    e.preventDefault();
+                    $('.right-bar').hide();
+                });
+                $('#right-bar-toggle').click(function(e) {
+                    e.preventDefault();
+                    $('.right-bar').show();
+                });
+                $(document).on('click', '.read-notification', function(e) {
+                    e.preventDefault();
+                    var notificationID = $(this).data('id');
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('read.notification') }}",
+                        data: {
+                            id: notificationID
+                        },
+                        success: function(response) {
+                            if (response) {
+                                toastr.success('Notification read successfully');
+                                fetchNotifications();
+                            } else {
+                                toastr.error('Failed to read notification');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+                // fetchNotifications();
+            });
+        </script>
+    </div>
 </body>
 
 </html>

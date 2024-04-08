@@ -1,5 +1,13 @@
 @extends('Layout.master')
 @section('main_section')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -9,11 +17,11 @@
                     </div>
                     <hr>
                     <br>
-                    <form action="{{route('download.payslip.index')}}" method="post">
+                    <form action="{{ route('download.payslip.index') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-5">
-                                 <label for="" class="form-label">Select Employee</label>
+                                <label for="" class="form-label">Select Employee</label>
                                 <select name="user_id" class="form-select">
                                     <option disabled selected>Select Employee</option>
                                     @foreach ($users as $user)

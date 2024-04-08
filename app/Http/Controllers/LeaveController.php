@@ -77,6 +77,7 @@ class LeaveController extends Controller
                     'user_id' => $request->user_id,
                     'reason' => $request->reason,
                     'leave_type' => $status,
+                    'reason' => $request->reason
                 ]);
             }
             Attendance::insert($attendances);

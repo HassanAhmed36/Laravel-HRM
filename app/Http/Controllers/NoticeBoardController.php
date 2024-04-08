@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomHelper;
 use App\Models\NoticeBoard;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NoticeBoardController extends Controller
@@ -36,8 +38,11 @@ class NoticeBoardController extends Controller
                 "date" => $request->date,
                 "description" => $request->description,
             ]);
+            $users = User::all();
+            CustomHelper::SendNotification($users, 1, "New notice posted on the notice board");
             return back()->with('success', 'NoticeBoard Added Successfully!');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
             return back()->with('error', 'NoticeBoard Added Failed!');
         }
     }

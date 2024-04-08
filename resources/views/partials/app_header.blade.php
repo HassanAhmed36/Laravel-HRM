@@ -54,7 +54,7 @@
                     <i class="bx bx-fullscreen"></i>
                 </button>
             </div>
-            <div class="dropdown d-inline-block">
+            <div class="dropdown d-inline-block" id="right-bar-toggle">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                     <i class="bx bx-bell bx-tada"></i>
                     <span class="badge bg-danger rounded-pill">3</span>

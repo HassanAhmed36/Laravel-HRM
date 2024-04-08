@@ -61,6 +61,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'leave_delete'],
             ['name' => 'deduction_setting_view'],
             ['name' => 'deduction_setting_update'],
+            ['name' => 'all_leave_request'],
         ]);
         $permissions = Permission::all();
         Designation::find(1)->permissions()->attach($permissions->pluck('id'));

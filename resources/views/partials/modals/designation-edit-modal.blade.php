@@ -106,7 +106,7 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                        
+
                                 </td>
                             </tr>
                             <tr>
@@ -122,6 +122,15 @@
                                 <td><input name="permissions[]" class="form-check-input" type="checkbox" value="43"
                                         @checked($permission->contains('id', 43))>
                                 </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>All Leaves Requests</td>
+                                <td><input name="permissions[]" class="form-check-input" type="checkbox" value="46" @checked($permission->contains('id', 46))>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                             </tr>
                             <tr>

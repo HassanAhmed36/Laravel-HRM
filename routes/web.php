@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\CustomHelper;
 use App\Http\Controllers\AllowanceController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\AuthController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LeaveQuotaController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\NoticeBoardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\UserController;
 use App\Models\Attendance;
@@ -24,6 +26,8 @@ use App\Models\Designation;
 use App\Models\InterviewSchedule;
 use App\Services\AttendanceService;
 use App\Services\EmployeeService;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -142,12 +146,22 @@ Route::middleware('check.auth')->group(function () {
 
 
     Route::prefix('Leave-Request')->group(function () {
-        Route::get('/', [LeaveRequestController::class, 'index'])->name('leave.request.index');
-        Route::post('/store', [LeaveRequestController::class, 'store'])->name('leave.request.store');
-        Route::get('/edit', [LeaveRequestController::class, 'edit'])->name('leave.request.edit');
-        Route::post('/update/{id}', [LeaveRequestController::class, 'update'])->name('leave.request.update');
-        Route::get('/delete/{id}', [LeaveRequestController::class, 'destroy'])->name('leave.request.delete');
+        Route::middleware('check.permission:LeaveRequest')->group(function () {
+            Route::get('/', [LeaveRequestController::class, 'index'])->name('leave.request.index');
+            Route::post('/store', [LeaveRequestController::class, 'store'])->name('leave.request.store');
+            Route::get('/edit', [LeaveRequestController::class, 'edit'])->name('leave.request.edit');
+            Route::post('/update/{id}', [LeaveRequestController::class, 'update'])->name('leave.request.update');
+            Route::get('/delete/{id}', [LeaveRequestController::class, 'destroy'])->name('leave.request.delete');
+        });
+        Route::middleware('check.permission:all_leave_request')->group(function () {
+            Route::get('/All', [LeaveRequestController::class, 'getAllLeaveRequest'])->name('all.leave.request');
+            Route::get('/Reject/{id}', [LeaveRequestController::class, 'leaveRequestReject'])->name('leave.request.reject');
+            Route::get('/Approve/{id}', [LeaveRequestController::class, 'leaveRequestApprove'])->name('leave.request.approve');
+        });
     });
+
+    Route::get('/get-notification', [NotificationController::class, 'getNotification'])->name('get.notification');
+    Route::get('/read-notification', [NotificationController::class, 'readNotification'])->name('read.notification');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
