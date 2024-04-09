@@ -67,7 +67,6 @@ This project, which is my personal endeavor, aims to offer a comprehensive Human
 - Backend Framework: Laravel
 - Frontend Technologies: jQuery, Bootstrap
 
-###Certainly! Below are the markdown formatted instructions for cloning the project and setting it up, including running the seeder with the admin credentials:
 
 ---
 
