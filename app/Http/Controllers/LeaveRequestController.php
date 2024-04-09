@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomHelper;
 use App\Models\Attendance;
 use App\Models\Leave;
 use App\Models\LeaveQuota;
 use App\Models\LeaveRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +50,9 @@ class LeaveRequestController extends Controller
                 'end_date' => $request->end_date,
                 'user_id' => Auth::user()->id,
             ]);
+            $user = Auth::user();
+            $users = User::whereIn('designation_id', [1, 2])->get();
+            CustomHelper::SendNotification($users, 2, "$user->name has requested for leave.");
             return back()->with('success', 'leave request successfully submited!');
         } catch (\Throwable $th) {
             return back()->with('error', 'leave request submited Failed!');
@@ -91,6 +96,11 @@ class LeaveRequestController extends Controller
                 'end_date' => $request->end_date,
                 'user_id' => Auth::user()->id,
             ]);
+
+            $user = Auth::user();
+            $users = User::whereIn('designation_id', [1, 2])->get();
+            CustomHelper::SendNotification($users, 2, "$user->name Update a leave request.");
+
             return back()->with('success', 'leave request successfully Updated!');
         } catch (\Throwable $th) {
             return back()->with('error', 'leave request submited Updated!');
@@ -179,6 +189,11 @@ class LeaveRequestController extends Controller
             LeaveRequest::find($id)->update([
                 'status' => 1
             ]);
+            $user = User::find($LeaveRequest->user_id);
+            $users = User::where('id', $LeaveRequest->user_id)
+                ->orWhereIn('designation_id', [1, 2])
+                ->get();
+            CustomHelper::SendNotification($users, 2, "$user->name leave request has been approved.");
             DB::commit();
             return back()->with('success', 'Leave Approved successfully!');
         } catch (\Exception $e) {
@@ -190,9 +205,13 @@ class LeaveRequestController extends Controller
     public function leaveRequestReject($id)
     {
         try {
-            LeaveRequest::find($id)->update([
+            $LeaveRequest = LeaveRequest::find($id);
+            $LeaveRequest->update([
                 'status' => 0
             ]);
+            $user = User::find($LeaveRequest->user_id);
+            $users = User::where('id', $LeaveRequest->user_id)->orWhereIn('designation_id', [1, 2])->get();
+            CustomHelper::SendNotification($users, 2, "$user->name leave request has been Rejected.");
             return back()->with('success', 'Leave Request Rejected Successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Leave Request Rejected Failed!');

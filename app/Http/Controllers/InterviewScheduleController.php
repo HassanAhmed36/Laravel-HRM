@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomHelper;
 use App\Models\Candidate;
 use App\Models\InterviewSchedule;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InterviewScheduleController extends Controller
@@ -35,6 +37,9 @@ class InterviewScheduleController extends Controller
                 'status' => $request->status,
                 'interviewer_id' => $request->interviewer_id,
             ]);
+            $interviewDateTime = Carbon::parse($request->interview_datetime)->format('l, F j, Y \a\t h:i A');
+            $interviewer = User::where('id', $request->interviewer_id)->whereIn('designation_id', [1, 2])->get();
+            CustomHelper::SendNotification($interviewer, 1, "Your interview is scheduled for $interviewDateTime");
             return back()->with('success', 'Interview scheduled successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Interview scheduled Failed!');

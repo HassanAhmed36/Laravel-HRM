@@ -43,7 +43,6 @@ class CustomHelper
                 'type' => $type,
                 'message' => $message
             ]));
-            // event(new NotificationSent($user));
         }
     }
 }

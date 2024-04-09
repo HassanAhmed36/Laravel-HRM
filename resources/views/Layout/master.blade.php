@@ -120,7 +120,7 @@
                         }
                     });
                 });
-                // fetchNotifications();
+                fetchNotifications();
             });
         </script>
     </div>

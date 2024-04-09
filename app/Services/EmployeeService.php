@@ -57,16 +57,18 @@ class EmployeeService
                     'IBAN' => $request->IBAN,
                     'user_id' => $user->id,
                 ]);
+
                 EmployeeLeave::create([
-                    'sick_leave' => $request->sick_leave,
-                    'casual_leave' => $request->casual_leave,
-                    'annual_leave' => $request->annual_leave,
+                    'sick_leave' => $request->sick_leave ?? 0,
+                    'casual_leave' => $request->casual_leave ?? 0,
+                    'annual_leave' => $request->annual_leave ?? 0,
                     'user_id' => $user->id,
                 ]);
+
                 LeaveQuota::create([
-                    'sick_leave' => $request->sick_leave,
-                    'casual_leave' => $request->casual_leave,
-                    'annual_leave' => $request->annual_leave,
+                    'sick_leave' => $request->sick_leave ?? 0,
+                    'casual_leave' => $request->casual_leave ?? 0,
+                    'annual_leave' => $request->annual_leave ?? 0,
                     'unpaid_leave' => 0,
                     'user_id' => $user->id,
                 ]);
@@ -199,5 +201,4 @@ class EmployeeService
             return back()->with('error', 'bank details updated failed!');
         }
     }
-
 }
